@@ -23,19 +23,18 @@ export default class MenuBuilder {
       process.env.NODE_ENV === 'development' ||
       process.env.DEBUG_PROD === 'true'
     ) {
-      this.setupDevelopmentEnvironment();
+      // this.setupDevelopmentEnvironment();
     }
-
-    const template =
-      process.platform === 'darwin'
-        ? this.buildDarwinTemplate()
-        : this.buildDefaultTemplate();
-
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-
-    return menu;
+  
+    // Desabilitar completamente o menu
+    Menu.setApplicationMenu(null); // Isso vai desabilitar o menu completamente
+  
+    // Se você não quiser retornar null, pode retornar uma instância vazia de Menu:
+    // return new Menu(); // Retorna uma instância vazia de Menu
+  
+    return new Menu(); // Aqui, retornamos um menu vazio para evitar o erro
   }
+  
 
   setupDevelopmentEnvironment(): void {
     this.mainWindow.webContents.on('context-menu', (_, props) => {
@@ -84,73 +83,8 @@ export default class MenuBuilder {
         },
       ],
     };
-    const subMenuEdit: DarwinMenuItemConstructorOptions = {
-      label: 'Edit',
-      submenu: [
-        { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
-        { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
-        { type: 'separator' },
-        { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
-        { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
-        { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
-        {
-          label: 'Select All',
-          accelerator: 'Command+A',
-          selector: 'selectAll:',
-        },
-      ],
-    };
-    const subMenuViewDev: MenuItemConstructorOptions = {
-      label: 'View',
-      submenu: [
-        {
-          label: 'Reload',
-          accelerator: 'Command+R',
-          click: () => {
-            this.mainWindow.webContents.reload();
-          },
-        },
-        {
-          label: 'Toggle Full Screen',
-          accelerator: 'Ctrl+Command+F',
-          click: () => {
-            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
-          },
-        },
-        {
-          label: 'Toggle Developer Tools',
-          accelerator: 'Alt+Command+I',
-          click: () => {
-            this.mainWindow.webContents.toggleDevTools();
-          },
-        },
-      ],
-    };
-    const subMenuViewProd: MenuItemConstructorOptions = {
-      label: 'View',
-      submenu: [
-        {
-          label: 'Toggle Full Screen',
-          accelerator: 'Ctrl+Command+F',
-          click: () => {
-            this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
-          },
-        },
-      ],
-    };
-    const subMenuWindow: DarwinMenuItemConstructorOptions = {
-      label: 'Window',
-      submenu: [
-        {
-          label: 'Minimize',
-          accelerator: 'Command+M',
-          selector: 'performMiniaturize:',
-        },
-        { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
-        { type: 'separator' },
-        { label: 'Bring All to Front', selector: 'arrangeInFront:' },
-      ],
-    };
+
+    // Remover a seção "Help" se não quiser que apareça
     const subMenuHelp: MenuItemConstructorOptions = {
       label: 'Help',
       submenu: [
@@ -186,10 +120,76 @@ export default class MenuBuilder {
     const subMenuView =
       process.env.NODE_ENV === 'development' ||
       process.env.DEBUG_PROD === 'true'
-        ? subMenuViewDev
-        : subMenuViewProd;
+        ? {
+            label: 'View',
+            submenu: [
+              {
+                label: 'Reload',
+                accelerator: 'Command+R',
+                click: () => {
+                  this.mainWindow.webContents.reload();
+                },
+              },
+              {
+                label: 'Toggle Full Screen',
+                accelerator: 'Ctrl+Command+F',
+                click: () => {
+                  this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
+                },
+              },
+              {
+                label: 'Toggle Developer Tools',
+                accelerator: 'Alt+Command+I',
+                click: () => {
+                  this.mainWindow.webContents.toggleDevTools();
+                },
+              },
+            ],
+          }
+        : {
+            label: 'View',
+            submenu: [
+              {
+                label: 'Toggle Full Screen',
+                accelerator: 'Ctrl+Command+F',
+                click: () => {
+                  this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen());
+                },
+              },
+            ],
+          };
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+    return [
+      subMenuAbout,
+      {
+        label: 'Edit',
+        submenu: [
+          { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
+          { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
+          { type: 'separator' },
+          { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
+          { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
+          { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
+          { label: 'Select All', accelerator: 'Command+A', selector: 'selectAll:' },
+        ],
+      },
+      subMenuView,
+      {
+        label: 'Window',
+        submenu: [
+          {
+            label: 'Minimize',
+            accelerator: 'Command+M',
+            selector: 'performMiniaturize:',
+          },
+          { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
+          { type: 'separator' },
+          { label: 'Bring All to Front', selector: 'arrangeInFront:' },
+        ],
+      },
+      // Remover a seção Help se não for necessário
+      // subMenuHelp, // Se não quiser o menu de ajuda, remova ou comente esta linha
+    ];
   }
 
   buildDefaultTemplate() {
@@ -252,6 +252,7 @@ export default class MenuBuilder {
                 },
               ],
       },
+      // Remover a seção Help se não for necessário
       {
         label: 'Help',
         submenu: [

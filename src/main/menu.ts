@@ -23,18 +23,17 @@ export default class MenuBuilder {
       process.env.NODE_ENV === 'development' ||
       process.env.DEBUG_PROD === 'true'
     ) {
-      // this.setupDevelopmentEnvironment();
+      this.setupDevelopmentEnvironment(); // Mantém a funcionalidade de inspecionar elemento
     }
-  
+
     // Desabilitar completamente o menu
     Menu.setApplicationMenu(null); // Isso vai desabilitar o menu completamente
-  
-    // Se você não quiser retornar null, pode retornar uma instância vazia de Menu:
+
+    // Se você quiser um menu vazio (opcional)
     // return new Menu(); // Retorna uma instância vazia de Menu
-  
-    return new Menu(); // Aqui, retornamos um menu vazio para evitar o erro
+
+    return new Menu(); // Retorna uma instância vazia de Menu para evitar o erro
   }
-  
 
   setupDevelopmentEnvironment(): void {
     this.mainWindow.webContents.on('context-menu', (_, props) => {
@@ -44,7 +43,7 @@ export default class MenuBuilder {
         {
           label: 'Inspect element',
           click: () => {
-            this.mainWindow.webContents.inspectElement(x, y);
+            this.mainWindow.webContents.inspectElement(x, y); // Função de inspeção de elemento
           },
         },
       ]).popup({ window: this.mainWindow });
@@ -84,36 +83,16 @@ export default class MenuBuilder {
       ],
     };
 
-    // Remover a seção "Help" se não quiser que apareça
-    const subMenuHelp: MenuItemConstructorOptions = {
-      label: 'Help',
+    const subMenuEdit: DarwinMenuItemConstructorOptions = {
+      label: 'Edit',
       submenu: [
-        {
-          label: 'Learn More',
-          click() {
-            shell.openExternal('https://electronjs.org');
-          },
-        },
-        {
-          label: 'Documentation',
-          click() {
-            shell.openExternal(
-              'https://github.com/electron/electron/tree/main/docs#readme',
-            );
-          },
-        },
-        {
-          label: 'Community Discussions',
-          click() {
-            shell.openExternal('https://www.electronjs.org/community');
-          },
-        },
-        {
-          label: 'Search Issues',
-          click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
-          },
-        },
+        { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
+        { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
+        { type: 'separator' },
+        { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
+        { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
+        { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
+        { label: 'Select All', accelerator: 'Command+A', selector: 'selectAll:' },
       ],
     };
 
@@ -161,18 +140,7 @@ export default class MenuBuilder {
 
     return [
       subMenuAbout,
-      {
-        label: 'Edit',
-        submenu: [
-          { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
-          { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
-          { type: 'separator' },
-          { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
-          { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
-          { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
-          { label: 'Select All', accelerator: 'Command+A', selector: 'selectAll:' },
-        ],
-      },
+      subMenuEdit,
       subMenuView,
       {
         label: 'Window',
@@ -187,8 +155,8 @@ export default class MenuBuilder {
           { label: 'Bring All to Front', selector: 'arrangeInFront:' },
         ],
       },
-      // Remover a seção Help se não for necessário
-      // subMenuHelp, // Se não quiser o menu de ajuda, remova ou comente esta linha
+      // Se quiser manter o menu "Help", adicione novamente:
+      // subMenuHelp,
     ];
   }
 
@@ -252,7 +220,6 @@ export default class MenuBuilder {
                 },
               ],
       },
-      // Remover a seção Help se não for necessário
       {
         label: 'Help',
         submenu: [

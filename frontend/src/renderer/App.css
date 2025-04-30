@@ -3,7 +3,7 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 
-.Menu{
+.AbaSuperior{
   margin: 0;
   background-color: #E5E5E5;
   width: 100%;
@@ -18,6 +18,21 @@
   align-items: center;
   justify-content: center;
   height: 80px;
+}
+
+.Menu{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.text_menu{
+  font-size: 1.3em;
+  color: black;
+}
+
+.Not img{
+  width: 33px;
 }
 
 .Logo img{

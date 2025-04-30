@@ -1,6 +1,5 @@
 import '../App.css';
-import menu from '../../../assets/linha.png';
-
+import menu from '../../../assets/linha.jpg'
 
 function Menu() {
     return (

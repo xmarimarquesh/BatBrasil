@@ -44,10 +44,11 @@ function Hello() {
 
 export default function App() {
   return (
+    
     <Router>
       <Routes>
-        <Route path="/home" element={<Hello />} />
         <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Hello />} />
         <Route path="/dashboards" element={<Dashboards />} />
         <Route path="/chamados" element={<Chamados />} />
         <Route path="/maquinas" element={<Maquinas />} />

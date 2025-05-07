@@ -1,4 +1,4 @@
-import '../App.css';
+import '../css/App.css';
 import Menu from '../components/Menu';
 
 export default function Maquinas() {

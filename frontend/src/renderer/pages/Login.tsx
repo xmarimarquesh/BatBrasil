@@ -1,6 +1,7 @@
-import './css/login.css';
-import linha from '../../assets/linha.jpg'
-import logo from '../../assets/logo.png'
+import '../css/login.css';
+import linha from '../../../assets/linha.jpg'
+import logo from '../../../assets/logo.png'
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   return (
@@ -19,7 +20,7 @@ export default function Login() {
                 <label htmlFor="">RRF</label>
                 <input type="number" placeholder='Digite seu RRF de funcionário...' step='1'/>
                 </div>
-                <button>ENTRAR</button>
+                <Link to="/home" className='button'>ENTRAR</Link>
             </div>
         </div>
     </>

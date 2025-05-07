@@ -2,7 +2,10 @@ import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
 import Menu from './components/Menu';
-import Login from "./Login";
+import Login from "./pages/Login";
+import Dashboards from './pages/Dashboard'; 
+import Chamados from './pages/Chamados'; 
+import Maquinas from './pages/Maquinas';
 
 function Hello() {
   return (
@@ -45,6 +48,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Hello />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboards" element={<Dashboards />} />
+        <Route path="/chamados" element={<Chamados />} />
+        <Route path="/maquinas" element={<Maquinas />} />
       </Routes>
     </Router>
   );

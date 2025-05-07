@@ -2,6 +2,9 @@ import '../App.css';
 import linha from '../../../assets/linha.jpg'
 import logo from '../../../assets/logo.png'
 import notification from '../../../assets/notification.png'
+import { Link, Route, Routes } from 'react-router-dom';
+
+
 
 function Menu() {
     return (
@@ -13,14 +16,14 @@ function Menu() {
           </div>
         </div>
         <div className='Menu'>
-          <div>
-            <a href="" className='text_menu'>Dashboards</a>
-            <a href="" className='text_menu'>Chamados</a>
-            <a href="" className='text_menu'>Máquinas</a>
+          <div className='Y'>
+            <Link to="/dashboards" className='text_menu'>Dashboards</Link>
+            <Link to="/chamados" className='text_menu'>Chamados</Link>
+            <Link to="/maquinas" className='text_menu'>Máquinas</Link>
           </div>
           <div className='Not'>
             <img src={notification} alt="notifications" />
-            <a href="" className='text_menu'>Sair</a>
+            <Link to="/" className='text_menu'>Sair</Link>
           </div>
         </div>
       </>

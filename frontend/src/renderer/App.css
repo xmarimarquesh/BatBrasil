@@ -1,7 +1,4 @@
-/*
- * @NOTE: Prepend a `~` to css file paths that are in your node_modules
- *        See https://github.com/webpack-contrib/sass-loader#imports
- */
+/* CSS DO MENU */
 
 .AbaSuperior{
   margin: 0;
@@ -24,6 +21,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  margin-top: 3px;
+  padding: 15px;
 }
 
 .text_menu{
@@ -31,8 +31,24 @@
   color: black;
 }
 
+.Y{
+  gap: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.Not{
+  gap: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+} 
+
 .Not img{
-  width: 33px;
+  width: 28px;
+  height: 28px;
 }
 
 .Logo img{
@@ -44,9 +60,10 @@
   height: 10px;
 }
 
+/* CSS GERAL */
+
 body {
   width: 100%;
-  color: white;
   height: 100vh;
   background: #ffffff;
   font-family: sans-serif;

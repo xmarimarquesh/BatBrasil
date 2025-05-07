@@ -17,7 +17,7 @@ function Menu() {
         </div>
         <div className='Menu'>
           <div className='Y'>
-            <Link to="/dashboards" className='text_menu'>Dashboards</Link>
+            <Link to="/home" className='text_menu'>Dashboards</Link>
             <Link to="/chamados" className='text_menu'>Chamados</Link>
             <Link to="/maquinas" className='text_menu'>Máquinas</Link>
           </div>

@@ -3,40 +3,15 @@ import icon from '../../assets/icon.svg';
 import './css/App.css';
 import Menu from './components/Menu';
 import Login from "./pages/Login";
-import Dashboards from './pages/Dashboard'; 
 import Chamados from './pages/Chamados'; 
 import Maquinas from './pages/Maquinas';
 
-function Hello() {
+function Dashboard() {
   return (
     <>
       <Menu/>
       <div>
-        <div className="Hello">
-          <img width="200" alt="icon" src={icon} />
-        </div>
-        <h1>electron-react-boilerplate</h1>
-        <div className="Hello">
-          <a
-            href="https://electron-react-boilerplate.js.org/"
-            target="_blank"
-            rel="noreferrer">
-            <button type="button">
-              <span role="img" aria-label="books">📚</span>
-              HELENINHA BOSCHINHA
-            </button>
-          </a>
-          <a
-            href="https://github.com/sponsors/electron-react-boilerplate"
-            target="_blank"
-            rel="noreferrer"
-            >
-            <button type="button">
-              <span role="img" aria-label="folded hands">🙏</span>
-              Donate
-            </button>
-          </a>
-        </div>
+        <h1>Dashboard</h1>
       </div>
     </>
   );
@@ -46,9 +21,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/home" element={<Hello />} />
         <Route path="/" element={<Login />} />
-        <Route path="/dashboards" element={<Dashboards />} />
+        <Route path="/home" element={<Dashboard />} />
         <Route path="/chamados" element={<Chamados />} />
         <Route path="/maquinas" element={<Maquinas />} />
       </Routes>

@@ -1,4 +1,4 @@
-import '../App.css';
+import '../css/App.css';
 import linha from '../../../assets/linha.jpg'
 import logo from '../../../assets/logo.png'
 

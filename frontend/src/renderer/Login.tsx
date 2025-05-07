@@ -1,4 +1,4 @@
-import './App.css';
+import './css/login.css';
 import linha from '../../assets/linha.jpg'
 import logo from '../../assets/logo.png'
 
@@ -15,8 +15,10 @@ export default function Login() {
         <div className='login'>
             <div className='complogin'>
                 <h2>Login</h2>
+                <div className='input'>
                 <label htmlFor="">RRF</label>
-                <input type="text" />
+                <input type="number" placeholder='Digite seu RRF de funcionário...' step='1'/>
+                </div>
                 <button>ENTRAR</button>
             </div>
         </div>

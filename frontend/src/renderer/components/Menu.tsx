@@ -1,24 +1,29 @@
 import '../css/App.css';
 import linha from '../../../assets/linha.jpg'
 import logo from '../../../assets/logo.png'
+import notification from '../../../assets/notification.png'
+import { Link, Route, Routes } from 'react-router-dom';
+
+
 
 function Menu() {
     return (
       <>
-        <div className='Menu'>
+        <div className='AbaSuperior'>
           <img alt="icon" src={linha} className='Imagem'/>
           <div className='Logo'>
             <img src={logo} alt="BatBrasil"/>
           </div>
         </div>
-        <div>
-          <div>
-            <a href="">Dashboards</a>
-            <a href="">Chamados</a>
-            <a href="">Máquinas</a>
+        <div className='Menu'>
+          <div className='Y'>
+            <Link to="/dashboards" className='text_menu'>Dashboards</Link>
+            <Link to="/chamados" className='text_menu'>Chamados</Link>
+            <Link to="/maquinas" className='text_menu'>Máquinas</Link>
           </div>
-          <div>
-            <img src="../../../assets/notification.png" alt="" />
+          <div className='Not'>
+            <img src={notification} alt="notifications" />
+            <Link to="/" className='text_menu'>Sair</Link>
           </div>
         </div>
       </>

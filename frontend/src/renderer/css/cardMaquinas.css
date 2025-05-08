@@ -1,0 +1,49 @@
+.bolaTempo {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background-color: #f50;
+  border-radius: 100%;
+}
+
+.linhaTempo {
+  width: 3px;
+  height: 314px;
+  background: #f50;
+}
+
+.tempo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card {
+  border-radius: 5px;
+  background: #fff;
+  width: 60%;
+  height: 30%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.botao-maq {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+.botao-maq.finalizado {
+  background-color: #4CAF50;
+}
+
+.botao-maq.aberto {
+  background-color: #f44336;
+}
+
+.botao-maq.em-andamento {
+  background-color: #ff9800;
+}

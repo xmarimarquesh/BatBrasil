@@ -1,37 +1,89 @@
 import React, { useState } from 'react';
 import '../css/App.css';
 import Menu from '../components/Menu';
+import filtro from '../../../assets/filter.png';
+import CardChamado from '../components/CardChamado';
 
 export default function Chamados() {
   const [activeTab, setActiveTab] = useState('todos');
 
+  const chamados = [
+    {
+      titulo: 'Disco de afiação quebrou',
+      status: 'Em aberto',
+      responsavel: 'José Ricardo Almeida Campos',
+      autor: 'Paulo Gomes',
+      data: '17/04/2025',
+      prioridade: 'Urgente',
+    },
+    {
+      titulo: 'Sistema não responde',
+      status: 'Em andamento',
+      responsavel: 'Ana Julia Ribeiro',
+      autor: 'Marcos Silva',
+      data: '16/04/2025',
+      prioridade: 'Média',
+    },
+    {
+      titulo: 'Erro na geração de relatório',
+      status: 'Concluído',
+      responsavel: 'Carlos Eduardo',
+      autor: 'Fernanda Lopes',
+      data: '15/04/2025',
+      prioridade: 'Fácil',
+    },
+    {
+      titulo: 'Monitor piscando',
+      status: 'Em aberto',
+      responsavel: 'Rafael Martins',
+      autor: 'Larissa Dias',
+      data: '18/04/2025',
+      prioridade: 'Urgente',
+    },
+  ];
+
+  
   return (
-    <div className='abaChamado'>
+    <>
       <Menu />
-      <div className="container-chamados">
-        <h1>Chamados</h1>
+      <div className='abaChamado'>
+        <div className="container-chamados">
+          <h1>Chamados</h1>
 
-        <div className="mini-navbar">
-          <button
-            className={`tab-button ${activeTab === 'todos' ? 'active' : ''}`}
-            onClick={() => setActiveTab('todos')}
-          >
-            Todos
-          </button>
-          <button
-            className={`tab-button ${activeTab === 'meus' ? 'active' : ''}`}
-            onClick={() => setActiveTab('meus')}
-          >
-            Meus
-          </button>
-        </div>
+          <div className="mini-navbar">
+            <button
+              className={`tab-button ${activeTab === 'todos' ? 'active' : ''}`}
+              onClick={() => setActiveTab('todos')}
+              >
+              Todos
+            </button>
+            <button
+              className={`tab-button ${activeTab === 'meus' ? 'active' : ''}`}
+              onClick={() => setActiveTab('meus')}
+              >
+              Meus
+            </button>
+          </div>
 
-        {/* Aqui você pode renderizar o conteúdo com base na aba selecionada */}
-        <div className="conteudo-chamado">
-          {activeTab === 'todos' ? 
-          <div className='chamados'>Lista de todos os chamados</div> : <div className='chamados'>Meus chamados</div>}
+          <div className="conteudo-chamado">
+            <div className="filter">
+              <img src={filtro} alt="" />
+              <button>Abrir Chamado</button>
+            </div>
+            {activeTab === 'todos' ? 
+            <div className='chamados'>
+              {chamados.map((chamado, index) => (
+                <CardChamado key={index} {...chamado} />
+              ))}
+            </div> 
+            : 
+            <div className='chamados'>
+              Meus chamados
+            </div>
+            }
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

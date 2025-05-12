@@ -1,5 +1,37 @@
 /* CSS DO MENU */
 
+.text_menu {
+  position: relative;
+  text-decoration: none;
+  color: black;
+  padding-bottom: 5px;
+  margin: 0 15px;
+}
+
+.text_menu::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background-color: #2f73d9;
+  transform: translateX(-50%);
+  transform-origin: center;
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima do centro para as laterais */
+.text_menu:hover::after {
+  width: 100%;
+}
+
+/* Quando ativo, sublinhado permanece */
+.text_menu.active::after {
+  width: 100%;
+}
+
+
 body {
   font-family: "Nunito", sans-serif;
 }

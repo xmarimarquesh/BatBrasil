@@ -22,9 +22,11 @@
 .card {
   border-radius: 5px;
   background: #fff;
-  width: 60%;
-  height: 30%;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 1%;
+  width: 60%;
+  padding: 2%;
+  height: 50%;
 }
 
 .botao-maq {
@@ -37,7 +39,7 @@
 }
 
 .botao-maq.finalizado {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .botao-maq.aberto {
@@ -46,4 +48,56 @@
 
 .botao-maq.em-andamento {
   background-color: #ff9800;
+}
+
+.mainCard {
+  display: flex;
+  flex-direction: row;
+  margin: 2%;
+}
+
+.data {
+  color: #000;
+  font-family: Nunito;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0.6%;
+  margin-left: 1%;
+}
+
+.font {
+  color: #000;
+  font-family: Nunito;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-right: 2%;
+}
+
+.pagCard {
+  width: 100%;
+}
+
+.inputDesc {
+  background-color: #d9d9d9;
+  color: #000;
+  font-family: Nunito;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-right: 2%;
+  padding: 1%;
+  width: 90%;
+  height: 20%;
+}
+
+.desc{
+
+  display: flex;
+  flex-direction: row;
+  margin-top: 2%;
 }

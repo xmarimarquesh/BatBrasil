@@ -70,7 +70,27 @@ export default function Chamados() {
         isOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         title="Abrir chamado">
-        <label htmlFor="">Descrição<input type="text" name="" id="" /></label>
+        <div className='modal'>
+          <label>Setor
+          </label>
+            <select name="setor" id="setor">
+              <option value="setor1">Setor 1</option>
+              <option value="setor2">Setor 2</option>
+              <option value="setor3">Setor 3</option>
+              <option value="setor4">Setor 4</option>
+            </select>
+
+          <label>Máquina
+          </label>
+            <select name="maquina" id="maquina">
+              <option value="maquina1">Máquina 1</option>
+              <option value="maquina2">Máquina 2</option>
+              <option value="maquina3">Máquina 3</option>
+              <option value="maquina4">Máquina 4</option>
+            </select>
+          <label htmlFor="">Descrição<input type="text" name="" id="" /></label>
+          <button className='button'>Abrir chamado</button>
+        </div>
       </Modal>
       <Menu />
       <div className='abaChamado'>

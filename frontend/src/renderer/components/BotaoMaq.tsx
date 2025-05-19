@@ -1,4 +1,4 @@
-import '../css/cardMaquinas.css';
+import '../css/cardHistMaquina.css';
 
 interface BotaoMaqProps {
   texto: string;

@@ -31,7 +31,7 @@ body {
 }
 
 .text_menu{
-  font-size: 1.3em;
+  font-size: 1em;
   color: black;
 }
 
@@ -51,8 +51,8 @@ body {
 } 
 
 .Not img{
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
 }
 
 .Logo img{

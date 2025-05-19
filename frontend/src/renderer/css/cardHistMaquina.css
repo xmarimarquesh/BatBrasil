@@ -4,12 +4,17 @@
   flex-shrink: 0;
   background-color: #f50;
   border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .linhaTempo {
-  width: 3px;
+  width: 2px;
   height: 270px;
-  background: #f50;
+  background: #c1c1c1;
 }
 
 .tempo {
@@ -20,21 +25,41 @@
 }
 
 .card {
+  border-top: 3px solid #102961; 
+  border-radius: 5px 5px 0 0;
+  background: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 1%;
+  width: 55%;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  height: 225px;
+}
+
+
+.cardHist {
   border-radius: 5px;
   background: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   margin: 1%;
-  width: 60%;
+  width: 25%;
   padding-left: 2%;
   padding-right: 2%;
   padding-bottom: 1%;
-  height: 50%;
+  padding-top: 1%;
+  height: 210px;
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  flex-direction: column;
+  border-top: 3px solid #102961; 
 }
 
 .mainCard {
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: center;
   width: 100%;
   margin-left: 2%;
   margin-right: 2%;
@@ -43,12 +68,12 @@
 .data {
   color: #000;
   font-family: Nunito;
-  font-size: 12px;
+  font-size: 13px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   margin: 0.6%;
-  margin-left: 1%;
+  margin-left: 1.2%;
 }
 
 .font {
@@ -61,8 +86,7 @@
   margin-right: 2%;
 }
 
-.fontBold{
-
+.fontBold {
   color: #000;
   font-family: Nunito;
   font-size: 15px;
@@ -70,14 +94,13 @@
   font-weight: 500;
   line-height: normal;
   margin-right: 2%;
-
 }
 
 .pagCard {
   width: 100%;
   display: flex;
   flex-direction: row;
-  height: 100%;
+  height: 300px; /* define altura base para card e cardHist */
 }
 
 .inputDesc {
@@ -94,35 +117,20 @@
   height: 40px;
 }
 
-.desc{
-
+.desc {
   display: flex;
   flex-direction: row;
   margin-top: 2%;
 }
 
-.cardHist{
-
-  border-radius: 5px;
-  background: #fff;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  margin: 1%;
-  width: 30%;
-  padding: 2%;
-  height: 100%;
-}
-
-.arruma{
-
+.arruma {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 60%;
+  height: 150px;
 }
 
-
- /* Histoico botões */
-
+/* Botões Histórico */
 .botao-maq {
   padding: 6px 16px;
   border: none;
@@ -130,6 +138,7 @@
   font-weight: bold;
   color: white;
   cursor: pointer;
+  font-size: small;
 }
 
 .botao-maq.finalizado {
@@ -142,4 +151,15 @@
 
 .botao-maq.em-andamento {
   background-color: #ff9800;
+}
+
+.arrumaHist {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+img{
+  width: 70%;
 }

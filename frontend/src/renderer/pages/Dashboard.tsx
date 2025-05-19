@@ -1,14 +1,12 @@
 import '../css/App.css';
 import Menu from '../components/Menu';
 
-
-export default function Chamados() {
+export default function Dashboards() {
   return (
     <>
-      <Menu />
-      <h1>Chamados</h1>
+      <Menu/>
+      <h1>Dashboards</h1>
     </>
   );
 }
-
 

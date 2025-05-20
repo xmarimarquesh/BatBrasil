@@ -1,4 +1,5 @@
-import '../css/App.css';
+import '../css/menu.css'
+
 import linha from '../../../assets/linha.jpg'
 import logo from '../../../assets/logo.png'
 import notification from '../../../assets/notification.png'

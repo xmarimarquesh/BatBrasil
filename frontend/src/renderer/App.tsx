@@ -1,5 +1,4 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
 import './css/App.css';
 import Menu from './components/Menu';
 import Login from "./pages/Login";
@@ -19,6 +18,7 @@ function Dashboard() {
 
 export default function App() {
   return (
+    
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />

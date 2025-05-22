@@ -1,0 +1,146 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.main {
+  min-height: 100vh;
+  border-radius: 40px 40px 0px 0px;
+  background: #f4f3f3;
+  box-shadow: 0px -3px 10px 0px rgba(0, 0, 0, 0.25);
+  padding-left: 2%;
+  padding-right: 2%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+
+.card-chamado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 24px;
+  border-radius: 12px;
+  background-color: rgb(255, 255, 255);
+  margin: 16px 0;
+  box-shadow: 0 4px 12px rgba(2, 2, 0.3, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 90%;
+  cursor: pointer;
+}
+
+.card-chamado:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Colunas */
+.coluna-esquerda, .coluna-centro, .coluna-direita {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  
+}
+
+.coluna-esquerda {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.id{
+
+  display: flex;
+  flex-direction: row;
+}
+
+.coluna-centro {
+  flex: 1.5;
+  display: flex;
+  flex-direction: row;
+}
+
+.coluna-direita {
+  flex: 1;
+  align-items: end;
+}
+
+/* Tipografia */
+.card-chamado strong {
+  font-size: 1.05rem;
+  color: #1a1a1a;
+}
+
+.card-chamado p {
+  margin: 4px 0;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.status {
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+/* Data */
+.data {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  font-weight: normal;
+}
+
+.hash{
+
+  color: #fd5507;
+  margin-right: 2%;
+}
+
+.maquinas{
+
+  margin: 2%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+
+
+.historico {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.4s ease; /* ou use só height e opacity se preferir */
+  width: 90%;
+}
+
+.historico.aberto {
+  max-height: 1000px; /* um valor grande o suficiente para mostrar o conteúdo */
+  opacity: 1;
+}
+
+.abrir-chamado button{
+  background-color: #9F0000;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 8px 35px;
+}
+
+.abrir-chamado button:hover{
+  background-color: #b90000;
+  cursor: pointer;
+}
+
+.abrir-chamado{
+
+  margin: 2%;
+  margin-bottom: 0%;
+  display: flex;
+  justify-content: flex-end;
+}

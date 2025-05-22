@@ -88,8 +88,8 @@ html, body {
 /* Data */
 .data {
   margin-bottom: 8px;
-  font-weight: bold;
   font-size: 0.95rem;
+  font-weight: normal;
 }
 
 .hash{
@@ -120,4 +120,27 @@ html, body {
 .historico.aberto {
   max-height: 1000px; /* um valor grande o suficiente para mostrar o conteúdo */
   opacity: 1;
+}
+
+.abrir-chamado button{
+  background-color: #9F0000;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 8px 35px;
+}
+
+.abrir-chamado button:hover{
+  background-color: #b90000;
+  cursor: pointer;
+}
+
+.abrir-chamado{
+
+  margin: 2%;
+  margin-bottom: 0%;
+  display: flex;
+  justify-content: flex-end;
 }

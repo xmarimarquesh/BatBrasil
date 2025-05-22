@@ -32,10 +32,6 @@ function Menu() {
       });
   }, []);
 
-  if (!user) {
-    return <p>Carregando informações da sessão...</p>;
-  }
-
     return (
       <>
         <Notification
@@ -65,7 +61,6 @@ function Menu() {
 
           <div className='Not'>            
             {user && <h3>{user.nome}</h3>}
-            <img src={notification} alt="notifications" />
             <button onClick={() => setModalOpen(true)}><img src={notification} alt="notifications" /></button>
             <Link to="/" className='text_menu'>Sair</Link>
           </div>

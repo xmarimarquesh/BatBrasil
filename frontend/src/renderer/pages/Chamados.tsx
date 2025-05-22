@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../css/App.css';
 import Menu from '../components/Menu';
 import filtro from '../../../assets/filter.png';
@@ -64,6 +64,12 @@ export default function Chamados() {
 
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const toggleDropdown = () => setIsOpen(prev => !prev);
+
+  
   return (
     <>
       <Modal
@@ -89,7 +95,7 @@ export default function Chamados() {
               <option value="maquina4">Máquina 4</option>
             </select>
           <label htmlFor="">Descrição<input type="text" name="" id="" /></label>
-          <button className='button'>Abrir chamado</button>
+          <button className='button' onClick={() => setModalOpen(false)}>Abrir chamado</button>
         </div>
       </Modal>
       <Menu />
@@ -114,8 +120,15 @@ export default function Chamados() {
 
           <div className="conteudo-chamado">
             <div className="filter">
-              <img src={filtro} alt="" />
-              <button onClick={() => setModalOpen(true)}>Abrir Chamado</button>
+              <button onClick={toggleDropdown} className='but_filtro'><img src={filtro} alt="" /></button>
+              <button onClick={() => setModalOpen(true)} className='abrir'>Abrir Chamado</button>
+              {isOpen && (
+                <div className="filtro-opcoes">
+                  <div>Urgente</div>
+                  <div>Média</div>
+                  <div>Baixa</div>
+                </div>
+              )}
             </div>
             {activeTab === 'todos' ? 
             <div className='chamados'>

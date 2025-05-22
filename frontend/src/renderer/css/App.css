@@ -83,6 +83,12 @@ body {
   align-items: center;
 } 
 
+.Not button{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 .Not img{
   width: 28px;
   height: 28px;
@@ -165,7 +171,7 @@ body {
   flex-direction: column;
 }
 
-.conteudo-chamado button{
+.abrir{
   background-color: #9F0000;
   border: none;
   color: white;
@@ -175,8 +181,14 @@ body {
   padding: 8px 35px;
 }
 
-.conteudo-chamado button:hover{
+.abrir:hover{
   background-color: #b90000;
+  cursor: pointer;
+}
+
+.but_filtro{
+  background-color: transparent;
+  border: none;
   cursor: pointer;
 }
 
@@ -211,7 +223,7 @@ body {
   justify-content: space-between;
   align-items: flex-start;
   padding: 16px 24px;
-  border-radius: 12px;
+  border-radius: 4px;
   background-color: rgb(255, 255, 255);
   margin: 16px 0;
   width: 80%;
@@ -299,6 +311,23 @@ body {
   z-index: 1000;
 }
 
+.modal-dropdown {
+  position: fixed;
+  top: 130px; 
+  right: 130px; 
+  z-index: 1000;
+}
+
+.modal-content-not {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 500px;
+  min-width: 500px;
+  min-height: 500px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
 /* Estilo para o conteúdo do modal */
 .modal-content {
   background-color: white;
@@ -369,7 +398,7 @@ body {
     margin-bottom: 15px;
 }
 
-.button {
+.modal button {
   width: 35%;
   height: 3rem;
   flex-shrink: 0;
@@ -384,8 +413,41 @@ body {
   font-weight: bold;
   border: none;
   align-self: center;
+  cursor: pointer;
 }
 
-.modal label {
-  
+/* FILTROS */
+
+.filtro-container {
+  position: relative;
+  display: inline-block;
+}
+
+.filtro-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.filtro-opcoes {
+  position: absolute;
+  top: 35%; 
+  right: 20%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  padding: 8px;
+  min-width: 120px;
+}
+
+.filtro-opcoes div {
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.filtro-opcoes div:hover {
+  background-color: #f0f0f0;
 }

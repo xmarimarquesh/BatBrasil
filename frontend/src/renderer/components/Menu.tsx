@@ -1,9 +1,11 @@
-import '../css/App.css';
+import '../css/menu.css'
+
 import linha from '../../../assets/linha.jpg'
 import logo from '../../../assets/logo.png'
 import notification from '../../../assets/notification.png'
 import { Link, Route, Routes } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
+import Notification from './Notification';
 import React, { useEffect, useState } from 'react';
 
 interface User {
@@ -13,6 +15,7 @@ interface User {
 }
 
 function Menu() {
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const [user, setUsuario] = useState<User | null>(null)
 
@@ -35,6 +38,18 @@ function Menu() {
 
     return (
       <>
+        <Notification
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Notificações">
+          <div className='modal'>
+            <p>notification 1</p>
+            <p>notification 3</p>
+            <p>notification 5</p>
+            <p>notification 2</p>
+            <p>notification 6</p>
+          </div>
+        </Notification>
         <div className='AbaSuperior'>
           <img alt="icon" src={linha} className='Imagem'/>
           <div className='Logo'>
@@ -51,6 +66,7 @@ function Menu() {
           <div className='Not'>            
             {user && <h3>{user.nome}</h3>}
             <img src={notification} alt="notifications" />
+            <button onClick={() => setModalOpen(true)}><img src={notification} alt="notifications" /></button>
             <Link to="/" className='text_menu'>Sair</Link>
           </div>
         </div>

@@ -1,15 +1,26 @@
-import '../css/App.css';
+import '../css/chamado.css'
 
-interface CardChamadoProps {
+
+interface ChamadoProps {
   titulo: string;
   status: string;
   responsavel: string;
   autor: string;
   data: string;
   prioridade: string;
+  onClick: () => void;
 }
 
-export default function CardChamado ({ titulo, status, responsavel, autor, data, prioridade } : CardChamadoProps) {
+export default function CardChamado({
+  titulo,
+  status,
+  responsavel,
+  autor,
+  data,
+  prioridade,
+  onClick
+}: ChamadoProps) {
+
   const statusColor = {
     'Em aberto': 'red',
     'Em andamento': 'goldenrod',
@@ -23,14 +34,14 @@ export default function CardChamado ({ titulo, status, responsavel, autor, data,
   }[prioridade];
 
   return (
-    <div className="card-chamado">
+    <div className="card-chamado" onClick={onClick}>
       <div className="coluna-esquerda">
         <strong>{titulo}</strong>
         <span className="status" style={{ color: statusColor }}>{status}</span>
       </div>
       <div className="coluna-centro">
         <p><strong>Responsável:</strong> {responsavel}</p>
-        <p><strong>Por:</strong> {autor}</p>
+        <p><strong>Autor:</strong> {autor}</p>
       </div>
       <div className="coluna-direita">
         <p className="data"><strong>{data}</strong></p>

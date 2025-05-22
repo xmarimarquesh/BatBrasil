@@ -1,17 +1,17 @@
 import React, { useRef, useState } from 'react';
-import '../css/App.css';
+import '../css/chamado.css';
 import Menu from '../components/Menu';
 import filtro from '../../../assets/filter.png';
 import CardChamado from '../components/CardChamado';
-import Modal from '../components/Modal';  // Modal para criar um novo chamado
-import Chamado from '../components/Chamado';  // Modal para mostrar detalhes do chamado
+import Modal from '../components/Modal';
+import Chamado from '../components/Chamado';  
 
 
 export default function Chamados() {
-  const [activeTab, setActiveTab] = useState('todos'); // Controla se exibe "Todos" ou "Meus"
-  const [isModalOpen, setModalOpen] = useState(false); // Controla se o modal de criação está aberto
-  const [isChamadoModalOpen, setChamadoModalOpen] = useState(false); // Controla o modal de detalhes do chamado
-  const [selectedChamado, setSelectedChamado] = useState<any>(null); // Armazena os dados do chamado selecionado
+  const [activeTab, setActiveTab] = useState('todos');
+  const [isModalOpen, setModalOpen] = useState(false); 
+  const [isChamadoModalOpen, setChamadoModalOpen] = useState(false); 
+  const [selectedChamado, setSelectedChamado] = useState<any>(null); 
 
   const chamadosTodos = [
     {

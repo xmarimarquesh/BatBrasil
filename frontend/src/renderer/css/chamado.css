@@ -56,21 +56,6 @@
   flex-direction: column;
 }
 
-.conteudo-chamado button{
-  background-color: #9F0000;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  font-weight: 600;
-  font-size: 1em;
-  padding: 8px 35px;
-}
-
-.conteudo-chamado button:hover{
-  background-color: #b90000;
-  cursor: pointer;
-}
-
 
 .filter {
   display: flex;
@@ -360,4 +345,3 @@
   height: 10px;
   border-radius: 50%;
 }
-

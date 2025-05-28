@@ -29,13 +29,8 @@ def login():
   RuF = data.get("ruf")
 
   try:
-<<<<<<< HEAD
       
     conn = odbc.connect(connection_string)
-=======
-    conn = odbc.connect(connection_string)
-    print(RuF)
->>>>>>> 47064f731ee226a71f31ee90cc7e17ed7ffdb4b4
     cursor = conn.cursor()
 
     cursor.execute(f'select U.RUF as ruf, U.Nome as nome, U.IDFuncao as funcao from Usuario U where U.ruf = {RuF}')

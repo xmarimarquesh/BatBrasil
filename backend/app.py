@@ -106,7 +106,9 @@ def get_chamados():
       UF.Nome AS NomeFuncionario,
       C.DataCriacao AS DataCriacao,
       S.status AS StatusCurrent,
-      D.Nivel AS Nivel
+      D.Nivel AS Nivel,
+	    C.IDMaquina AS IDMaquina,
+      C.Feedback AS Feedback
       FROM [dbo].[Chamado] C
       INNER JOIN [dbo].[Usuario] UT ON UT.RUF = C.IDTecnico 
       INNER JOIN [dbo].[Usuario] UF ON UF.RUF = C.IDFuncionario
@@ -114,9 +116,9 @@ def get_chamados():
       INNER JOIN [dbo].[Dificuldade] D ON D.ID = C.IDDificuldade
     """)
 
+
+
     rows = cursor.fetchall()
-    
-    print(rows)
 
     cursor.close()
     conn.close()
@@ -198,15 +200,23 @@ def get_maquinas():
       FROM [dbo].[Maquina] M
       INNER JOIN [dbo].[Setor] S ON S.ID = M.IDSetor
     """)
-
-    rows = cursor.fetchall() # isso vai retornar uma lista (tabela inteira) de listas (cada linha da tabela)
-
-    cols = [c[0] for c in cursor.description]
-    data = [dict(zip(cols, row)) for row in rows]
+  
+    rows = cursor.fetchall()
 
     cursor.close()
     conn.close()
-    return jsonify(data)
+    
+    maquinas = []
+    
+    for row in rows:
+      maquinas.append({
+          "ID": row[0],
+          "Descricao": row[1],
+          "DataCompra": row[2],
+          "Setor": row[3],
+    })
+
+    return jsonify(maquinas)
   except odbc.Error as e:
     print("Error fetching data:", e)
 

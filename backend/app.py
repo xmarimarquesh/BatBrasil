@@ -141,6 +141,47 @@ def get_chamados():
     print("Error fetching data:", e)
     return jsonify({"error": "Sessão não encontrada"}), 401
 
+# ----------------------------------------- ADICIONAR CHAMADOS ------------------------------------------
+
+@app.post("/chamados")
+def adicionar_chamado():
+    try:
+        # Obter dados do corpo da requisição
+        data = request.get_json()
+        descricao = data.get("Descricao")
+        id_tecnico = data.get("IDTecnico")
+        id_funcionario = data.get("IDFuncionario")
+        id_status = data.get("IDStatus")
+        id_dificuldade = data.get("IDDificuldade")
+
+        # Conexão com o banco de dados
+        try:
+            conn = odbc.connect(connection_string)
+            print("Connection successful!")
+        except odbc.Error as e:
+            print("Erro ao conectar ao banco de dados:", e)
+            return jsonify({"erro": "Falha na conexão com o banco de dados"}), 500
+
+        cursor = conn.cursor()
+
+        # Inserir dados na tabela Chamado
+        cursor.execute("""
+            INSERT INTO [dbo].[Chamado] 
+            (Descricao, IDTecnico, IDFuncionario, IDStatus, IDDificuldade, DataCriacao)
+            VALUES (?, ?, ?, ?, ?, GETDATE())
+        """, (descricao, id_tecnico, id_funcionario, id_status, id_dificuldade))
+
+        conn.commit()
+
+        cursor.close()
+        conn.close()
+
+        return jsonify({"mensagem": "Chamado adicionado com sucesso!"}), 201
+
+    except Exception as e:
+        print("Erro ao adicionar chamado:", e)
+        return jsonify({"erro": "Erro interno ao adicionar chamado"}), 500
+
 # ----------------------------------------- PEGAR CHAMADOS ESPECÍFICO ------------------------------------------
 
 # @app.get("/chamados/{id_user}")

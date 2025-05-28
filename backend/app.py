@@ -27,15 +27,10 @@ CORS(app, origins="http://localhost:1212", supports_credentials=True  )
 def login():
   data = request.get_json()
   RuF = data.get("ruf")
-  print(RuF)
 
   try:
-      
-    try:
-      conn = odbc.connect(connection_string)
-      print("Connection successful!")
-    except odbc.Error as e:
-      print("Error connecting to the database:", e)
+    conn = odbc.connect(connection_string)
+    print(RuF)
     cursor = conn.cursor()
 
     cursor.execute(f'select U.RUF as ruf, U.Nome as nome, U.IDFuncao as funcao from Usuario U where U.ruf = {RuF}')
@@ -175,17 +170,35 @@ def adicionar_chamado():
         print("Erro ao adicionar chamado:", e)
         return jsonify({"erro": "Erro interno ao adicionar chamado"}), 500
 
-# ----------------------------------------- PEGAR CHAMADOS ESPECÍFICO ------------------------------------------
+# ----------------------------------------- PEGAR MÁQUINAS ------------------------------------------
 
-# @app.get("/chamados/{id_user}")
-# def get_session(id_user: int):
-#     if "nome_current" in session:
-#         return jsonify({
-#             "nome": session["nome_current"],
-#             "ruf": session["ruf_current"],
-#             "funcao": session["funcao_current"]
-#         }), 200
-#     return jsonify({"error": "Sessão não encontrada"}), 401
+@app.get("/maquinas")
+def get_maquinas():
+  try:
+    conn = odbc.connect(connection_string)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+      SELECT 
+      M.ID as ID,
+      M.Descricao as Descricao,
+      M.DataCompra as DataCompra,
+      S.Name as Setor
+      FROM [dbo].[Maquina] M
+      INNER JOIN [dbo].[Setor] S ON S.ID = M.IDSetor
+    """)
+
+    rows = cursor.fetchall() # isso vai retornar uma lista (tabela inteira) de listas (cada linha da tabela)
+
+    cols = [c[0] for c in cursor.description]
+    data = [dict(zip(cols, row)) for row in rows]
+
+    cursor.close()
+    conn.close()
+    return jsonify(data)
+  except odbc.Error as e:
+    print("Error fetching data:", e)
+
 
 # --------------------------------------- RENDERIZAR ----------------------------------------------------
 if __name__ == "__main__":

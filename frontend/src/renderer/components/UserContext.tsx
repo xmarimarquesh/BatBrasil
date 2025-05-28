@@ -18,7 +18,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    if (user == null) {
       fetch("http://localhost:5000/session", {
         method: "GET",
         credentials: "include",
@@ -27,7 +26,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         .then(data => {
           setUser(data);
         });
-    }
+    
   }, []);
 
   return (

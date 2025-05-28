@@ -5,78 +5,49 @@ import filtro from '../../../assets/filter.png';
 import CardChamado from '../components/CardChamado';
 import Modal from '../components/Modal';
 import Chamado from '../components/Chamado';  
+import { useEffect } from 'react';
+import { useUser } from '../components/UserContext';
+
+interface IChamado {
+  Id: number;
+  Descricao: string;
+  StatusCurrent: string;
+  NomeTecnico: string;
+  NomeFuncionario: string;
+  DataCriacao: Date; // ou Date, se converter no `fetch`
+  Nivel: string;
+}
 
 
 export default function Chamados() {
   const [activeTab, setActiveTab] = useState('todos');
   const [isModalOpen, setModalOpen] = useState(false); 
   const [isChamadoModalOpen, setChamadoModalOpen] = useState(false); 
-  const [selectedChamado, setSelectedChamado] = useState<any>(null); 
+  const [selectedChamado, setSelectedChamado] = useState<IChamado | null>(null);
+  const [chamadosTodos, setChamadosTodos] = useState<IChamado[]>([]);
+  const [chamadosMeus, setChamadosMeus] = useState<IChamado[]>([]);
 
-  const chamadosTodos = [
-    {
-      titulo: 'Disco de afiação quebrou',
-      status: 'Em aberto',
-      responsavel: 'José Ricardo Almeida Campos',
-      autor: 'Paulo Gomes',
-      data: '17/04/2025',
-      prioridade: 'Urgente',
-    },
-    {
-      titulo: 'Sistema não responde',
-      status: 'Em andamento',
-      responsavel: 'Ana Julia Ribeiro',
-      autor: 'Marcos Silva',
-      data: '16/04/2025',
-      prioridade: 'Média',
-    },
-    {
-      titulo: 'Erro na geração de relatório',
-      status: 'Concluído',
-      responsavel: 'Carlos Eduardo',
-      autor: 'Fernanda Lopes',
-      data: '15/04/2025',
-      prioridade: 'Fácil',
-    },
-    {
-      titulo: 'Monitor piscando',
-      status: 'Em aberto',
-      responsavel: 'Rafael Martins',
-      autor: 'Larissa Dias',
-      data: '18/04/2025',
-      prioridade: 'Urgente',
-    },
-  ];
-
-  const chamadosMeus = [
-    {
-      titulo: 'Disco de afiação quebrou',
-      status: 'Em aberto',
-      responsavel: 'José Ricardo Almeida Campos',
-      autor: 'Paulo Gomes',
-      data: '17/04/2025',
-      prioridade: 'Urgente',
-    },
-    {
-      titulo: 'Sistema não responde',
-      status: 'Em andamento',
-      responsavel: 'Ana Julia Ribeiro',
-      autor: 'Marcos Silva',
-      data: '16/04/2025',
-      prioridade: 'Média',
-    }
-  ];
 
   const openChamadoModal = (chamado: any) => {
-    setSelectedChamado(chamado); // Define os dados do chamado selecionado
-    setChamadoModalOpen(true); // Abre o modal de detalhes do chamado
+    setSelectedChamado(chamado);
+    setChamadoModalOpen(true);
   };
 
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
   const toggleDropdown = () => setIsOpen(prev => !prev);
 
+  useEffect(() => {
+    fetch('http://localhost:5000/chamados')
+      .then(response => response.json())
+      .then(data => {
+        setChamadosTodos(data);
+        setChamadosMeus(data.filter((c: IChamado) => c.NomeTecnico === user?.nome));
+      })
+      .catch(error => console.error('Erro ao buscar chamados:', error));
+  }, []);
+
+
+  const { user } = useUser();
   
   return (
     <>
@@ -151,18 +122,28 @@ export default function Chamados() {
 
             <div className="chamados">
               {activeTab === 'todos'
-                ? chamadosTodos.map((chamado, index) => (
+                ? chamadosTodos.map((chamado => (
                     <CardChamado
-                      key={index}
-                      {...chamado}
-                      onClick={() => openChamadoModal(chamado)} // Abre o modal de detalhes
+                      key={chamado.Id}
+                      titulo={chamado.Descricao}
+                      status={chamado.StatusCurrent}
+                      responsavel={chamado.NomeTecnico}
+                      autor={chamado.NomeFuncionario}
+                      data={chamado.DataCriacao}
+                      prioridade={chamado.Nivel}
+                      onClick={() => openChamadoModal(chamado)}
                     />
-                  ))
-                : chamadosMeus.map((chamado, index) => (
+                  )))
+                : chamadosMeus.map((chamado) => (
                     <CardChamado
-                      key={index}
-                      {...chamado}
-                      onClick={() => openChamadoModal(chamado)} // Abre o modal de detalhes
+                      key={chamado.Id}
+                      titulo={chamado.Descricao}
+                      status={chamado.StatusCurrent}
+                      responsavel={chamado.NomeTecnico}
+                      autor={chamado.NomeFuncionario}
+                      data={chamado.DataCriacao}
+                      prioridade={chamado.Nivel}
+                      onClick={() => openChamadoModal(chamado)}
                     />
                   ))}
             </div>

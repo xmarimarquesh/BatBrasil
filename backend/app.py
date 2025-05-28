@@ -31,11 +31,7 @@ def login():
 
   try:
       
-    try:
-      conn = odbc.connect(connection_string)
-      print("Connection successful!")
-    except odbc.Error as e:
-      print("Error connecting to the database:", e)
+    conn = odbc.connect(connection_string)
     cursor = conn.cursor()
 
     cursor.execute(f'select U.RUF as ruf, U.Nome as nome, U.IDFuncao as funcao from Usuario U where U.ruf = {RuF}')
@@ -99,18 +95,16 @@ def get_session():
 @app.get("/chamados")
 def get_chamados():
   try:
-    try:
-      conn = odbc.connect(connection_string)
-      print("Connection successful!")
-    except odbc.Error as e:
-      print("Error connecting to the database:", e)
+    conn = odbc.connect(connection_string)
+    print("Connection successful! chamado")
 
     cursor = conn.cursor()
 
     cursor.execute("""SELECT 
+      C.ID AS ID,
       C.Descricao AS Descricao, 
       UT.Nome AS NomeTecnico,
-      UF.Nome AS NomeFincionario,
+      UF.Nome AS NomeFuncionario,
       C.DataCriacao AS DataCriacao,
       S.status AS StatusCurrent,
       D.Nivel AS Nivel
@@ -121,18 +115,31 @@ def get_chamados():
       INNER JOIN [dbo].[Dificuldade] D ON D.ID = C.IDDificuldade
     """)
 
-    rows = cursor.fetchall() # isso vai retornar uma lista (tabela inteira) de listas (cada linha da tabela)
-
+    rows = cursor.fetchall()
+    
     print(rows)
-
-    cols = [c[0] for c in cursor.description]
-    data = [dict(zip(cols, row)) for row in rows]
 
     cursor.close()
     conn.close()
-    return jsonify(data)
+    
+    chamados = []
+    
+    for row in rows:
+      chamados.append({
+          "Id": row[0],
+          "Descricao": row[1],
+          "NomeTecnico": row[2],
+          "NomeFuncionario": row[3],
+          "DataCriacao": row[4].isoformat(),
+          "StatusCurrent": row[5],
+          "Nivel": row[6],
+    })
+
+    return jsonify(chamados)
+
   except odbc.Error as e:
     print("Error fetching data:", e)
+    return jsonify({"error": "Sessão não encontrada"}), 401
 
 # ----------------------------------------- ADICIONAR CHAMADOS ------------------------------------------
 

@@ -4,6 +4,7 @@ import Menu from './components/Menu';
 import Login from "./pages/Login";
 import Chamados from './pages/Chamados'; 
 import Maquinas from './pages/Maquinas';
+import { UserProvider } from "./components/UserContext";
 
 function Dashboard() {
   return (
@@ -18,14 +19,15 @@ function Dashboard() {
 
 export default function App() {
   return (
-    
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Dashboard />} />
-        <Route path="/chamados" element={<Chamados />} />
-        <Route path="/maquinas" element={<Maquinas />} />
-      </Routes>
-    </Router>
+    <UserProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/home" element={<Dashboard />} />
+          <Route path="/chamados" element={<Chamados />} />
+          <Route path="/maquinas" element={<Maquinas />} />
+        </Routes>
+      </Router>
+    </UserProvider>
   );
 }

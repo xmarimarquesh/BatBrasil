@@ -6,7 +6,7 @@ interface ChamadoProps {
   status: string;
   responsavel: string;
   autor: string;
-  data: string;
+  data: Date;
   prioridade: string;
   onClick: () => void;
 }
@@ -22,16 +22,23 @@ export default function CardChamado({
 }: ChamadoProps) {
 
   const statusColor = {
-    'Em aberto': 'red',
+    'Aberto': 'red',
     'Em andamento': 'goldenrod',
-    'Concluído': 'green',
+    'Fechado': 'green',
   }[status];
 
   const prioridadeColor = {
     'Urgente': 'orange',
-    'Média': 'yellowgreen',
+    'Médio': 'yellowgreen',
     'Fácil': 'lime',
   }[prioridade];
+
+  const dataFormatada = new Date(data).toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'short',
+    year:
+     'numeric',
+  });
 
   return (
     <div className="card-chamado" onClick={onClick}>
@@ -44,7 +51,7 @@ export default function CardChamado({
         <p><strong>Autor:</strong> {autor}</p>
       </div>
       <div className="coluna-direita">
-        <p className="data"><strong>{data}</strong></p>
+        <p className="data"><strong>{dataFormatada}</strong></p>
         <div className="prioridade">
           <span className="bolinha" style={{ backgroundColor: prioridadeColor }}></span>
           <span>{prioridade}</span>

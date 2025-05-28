@@ -8,29 +8,13 @@ import { NavLink } from 'react-router-dom';
 import Notification from './Notification';
 import React, { useEffect, useState } from 'react';
 
-interface User {
-  id: number,
-  nome: string,
-  funcao: number
-}
+import { useUser } from "./UserContext";
+
 
 function Menu() {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const [user, setUsuario] = useState<User | null>(null)
-
-  useEffect(() => {
-    fetch("http://localhost:5000/session", {
-      method: "GET",
-      credentials: "include", // ESSENCIAL para enviar cookies da sessão
-    })
-      .then(res => res.json())
-      .then(user => {
-        if (!user.error) {
-          setUsuario(user);
-        }
-      });
-  }, []);
+  const { user } = useUser();
 
     return (
       <>

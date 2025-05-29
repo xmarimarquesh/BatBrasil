@@ -16,6 +16,8 @@ interface IChamado {
   NomeFuncionario: string;
   DataCriacao: Date; // ou Date, se converter no `fetch`
   Nivel: string;
+  IDMaquina: number;
+  Feedback: string;
 }
 
 

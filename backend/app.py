@@ -108,8 +108,10 @@ def get_chamados():
       S.status AS StatusCurrent,
       D.Nivel AS Nivel,
 	    C.IDMaquina AS IDMaquina,
-      C.Feedback AS Feedback
+      C.Feedback AS Feedback,
+      M.Descricao AS NomeMaquina
       FROM [dbo].[Chamado] C
+      INNET JOIN [dbo].[Maquina] M ON M.ID = C.IDMaquina
       INNER JOIN [dbo].[Usuario] UT ON UT.RUF = C.IDTecnico 
       INNER JOIN [dbo].[Usuario] UF ON UF.RUF = C.IDFuncionario
       INNER JOIN [dbo].[Status] S ON S.ID = C.IDStatus
@@ -134,6 +136,9 @@ def get_chamados():
           "DataCriacao": row[4].isoformat(),
           "StatusCurrent": row[5],
           "Nivel": row[6],
+          "IDMaquina": row[7],
+          "Feedback": row[8],
+          "NomeMaquina": row[9]
     })
 
     return jsonify(chamados)

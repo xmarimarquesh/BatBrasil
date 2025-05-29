@@ -28,8 +28,8 @@ export default function CardChamado({
   }[status];
 
   const prioridadeColor = {
-    'Urgente': 'orange',
-    'Médio': 'yellowgreen',
+    'Urgente': 'red',
+    'Médio': 'yellow',
     'Fácil': 'lime',
   }[prioridade];
 

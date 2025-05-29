@@ -195,7 +195,7 @@ def get_maquinas():
       SELECT 
       M.ID as ID,
       M.Descricao as Descricao,
-      M.DataCompra as DataCompra,
+      M.DataCompra as DataCriacao,
       S.Name as Setor
       FROM [dbo].[Maquina] M
       INNER JOIN [dbo].[Setor] S ON S.ID = M.IDSetor
@@ -212,7 +212,7 @@ def get_maquinas():
       maquinas.append({
           "ID": row[0],
           "Descricao": row[1],
-          "DataCompra": row[2],
+          "DataCriacao": row[2],
           "Setor": row[3],
     })
 

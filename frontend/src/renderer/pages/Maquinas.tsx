@@ -18,7 +18,7 @@ interface IChamado {
   StatusCurrent: string;
   NomeTecnico: string;
   NomeFuncionario: string;
-  DataCriacao: Date; // ou Date, se converter no `fetch`
+  DataCriacao: Date;
   Nivel: string;
   IDMaquina: number;
   Feedback: string;
@@ -35,15 +35,6 @@ export default function Maquinas() {
   const [chamados, setChamadosTodos] = useState<IChamado[]>([]);
   
   useEffect(() => {
-    fetch('http://localhost:5000/maquinas')
-      .then(response => response.json())
-      .then(data => {
-        setMaquinas(data);
-      })
-      .catch(error => console.error('Erro ao buscar chamados:', error));
-  }, []);
-
-  useEffect(() => {
       fetch('http://localhost:5000/chamados')
         .then(response => response.json())
         .then(data => {
@@ -52,12 +43,21 @@ export default function Maquinas() {
         .catch(error => console.error('Erro ao buscar chamados:', error));
     }, []);
 
-  const handleSelecionarMaquina = (id: number) => {
-    console.log(id)
-    setMaquinaSelecionadaId((prev) => (prev === id ? null : id));
-  };
+  useEffect(() => {
+    fetch('http://localhost:5000/maquinas')
+      .then(response => response.json())
+      .then(data => {
+        setMaquinas(data);
+      })
+      .catch(error => console.error('Erro ao buscar chamados:', error));
+  }, []);
 
-  console.log(maquinas)
+
+  const handleSelecionarMaquina = (id: number) => {
+    console.log("id: ", id)
+    setMaquinaSelecionadaId((prev) => (prev === id ? null : id));
+    console.log("maquina selecionada: ", maquinaSelecionadaId)
+  };
 
   return (
     <>

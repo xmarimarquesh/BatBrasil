@@ -14,10 +14,8 @@ interface IChamado {
   StatusCurrent: string;
   NomeTecnico: string;
   NomeFuncionario: string;
-  DataCriacao: Date; 
+  DataCriacao: Date; // ou Date, se converter no `fetch`
   Nivel: string;
-  IDMaquina: number;
-  Feedback: string;
 }
 
 
@@ -53,17 +51,20 @@ export default function Chamados() {
   
   return (
     <>
+      {/* Modal para mostrar os detalhes do chamado */}
       <Chamado
         isOpen={isChamadoModalOpen}
-        onClose={() => setChamadoModalOpen(false)} 
-        chamado={selectedChamado} 
+        onClose={() => setChamadoModalOpen(false)}  // Fecha o modal de detalhes
+        chamado={selectedChamado} // Passa os dados do chamado
       />
 
+      {/* Modal para criar um novo chamado */}
       <Modal
         isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}  
-        title="Abrir Chamado" 
+        onClose={() => setModalOpen(false)}  // Fecha o modal de criação
+        title="Abrir Chamado"  // Título do modal de criação
       >
+        {/* Formulário para criação de novo chamado */}
         <div className='modal'>
           <label>Setor</label>
           <select name="setor" id="setor">

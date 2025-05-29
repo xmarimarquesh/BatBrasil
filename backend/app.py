@@ -66,7 +66,7 @@ def get_setores():
 
     cursor.execute('select * from Status')
 
-    rows = cursor.fetchall() # isso vai retornar uma lista (tabela inteira) de listas (cada linha da tabela)
+    rows = cursor.fetchall() 
 
     cols = [c[0] for c in cursor.description]
     data = [dict(zip(cols, row)) for row in rows]
@@ -145,7 +145,6 @@ def get_chamados():
 @app.post("/chamados")
 def adicionar_chamado():
     try:
-        # Obter dados do corpo da requisição
         data = request.get_json()
         descricao = data.get("Descricao")
         id_tecnico = data.get("IDTecnico")
@@ -153,7 +152,6 @@ def adicionar_chamado():
         id_status = data.get("IDStatus")
         id_dificuldade = data.get("IDDificuldade")
 
-        # Conexão com o banco de dados
         try:
             conn = odbc.connect(connection_string)
             print("Connection successful!")
@@ -163,7 +161,6 @@ def adicionar_chamado():
 
         cursor = conn.cursor()
 
-        # Inserir dados na tabela Chamado
         cursor.execute("""
             INSERT INTO [dbo].[Chamado] 
             (Descricao, IDTecnico, IDFuncionario, IDStatus, IDDificuldade, DataCriacao)
@@ -199,7 +196,7 @@ def get_maquinas():
       INNER JOIN [dbo].[Setor] S ON S.ID = M.IDSetor
     """)
 
-    rows = cursor.fetchall() # isso vai retornar uma lista (tabela inteira) de listas (cada linha da tabela)
+    rows = cursor.fetchall() 
 
     cols = [c[0] for c in cursor.description]
     data = [dict(zip(cols, row)) for row in rows]
@@ -214,7 +211,6 @@ def get_maquinas():
 # --------------------------------------- RENDERIZAR ----------------------------------------------------
 if __name__ == "__main__":
   app.run(debug=True, port=5000)
-
 
 [
 # PADRÃO PARA INSERIR DADOS -----------------------------------------------------

@@ -66,7 +66,7 @@ def get_setores():
 
     cursor.execute('select * from Status')
 
-    rows = cursor.fetchall() # isso vai retornar uma lista (tabela inteira) de listas (cada linha da tabela)
+    rows = cursor.fetchall() 
 
     cols = [c[0] for c in cursor.description]
     data = [dict(zip(cols, row)) for row in rows]
@@ -108,8 +108,10 @@ def get_chamados():
       S.status AS StatusCurrent,
       D.Nivel AS Nivel,
 	    C.IDMaquina AS IDMaquina,
-      C.Feedback AS Feedback
+      C.Feedback AS Feedback,
+      M.Descricao AS NomeMaquina
       FROM [dbo].[Chamado] C
+      INNET JOIN [dbo].[Maquina] M ON M.ID = C.IDMaquina
       INNER JOIN [dbo].[Usuario] UT ON UT.RUF = C.IDTecnico 
       INNER JOIN [dbo].[Usuario] UF ON UF.RUF = C.IDFuncionario
       INNER JOIN [dbo].[Status] S ON S.ID = C.IDStatus
@@ -134,6 +136,9 @@ def get_chamados():
           "DataCriacao": row[4].isoformat(),
           "StatusCurrent": row[5],
           "Nivel": row[6],
+          "IDMaquina": row[7],
+          "Feedback": row[8],
+          "NomeMaquina": row[9]
     })
 
     return jsonify(chamados)
@@ -147,7 +152,6 @@ def get_chamados():
 @app.post("/chamados")
 def adicionar_chamado():
     try:
-        # Obter dados do corpo da requisição
         data = request.get_json()
         descricao = data.get("Descricao")
         id_tecnico = data.get("IDTecnico")
@@ -155,7 +159,6 @@ def adicionar_chamado():
         id_status = data.get("IDStatus")
         id_dificuldade = data.get("IDDificuldade")
 
-        # Conexão com o banco de dados
         try:
             conn = odbc.connect(connection_string)
             print("Connection successful!")
@@ -165,7 +168,6 @@ def adicionar_chamado():
 
         cursor = conn.cursor()
 
-        # Inserir dados na tabela Chamado
         cursor.execute("""
             INSERT INTO [dbo].[Chamado] 
             (Descricao, IDTecnico, IDFuncionario, IDStatus, IDDificuldade, DataCriacao)
@@ -224,7 +226,6 @@ def get_maquinas():
 # --------------------------------------- RENDERIZAR ----------------------------------------------------
 if __name__ == "__main__":
   app.run(debug=True, port=5000)
-
 
 [
 # PADRÃO PARA INSERIR DADOS -----------------------------------------------------

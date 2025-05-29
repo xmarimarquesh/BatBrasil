@@ -9,12 +9,12 @@ interface HistoricoItem {
 
 interface CardMaquinasProps {
   id: number;
-  dataChamado: string;
+  dataChamado: Date;
   funcionario: string;
   tecnico: string;
   descricao: string;
   feedback: string;
-  historico: HistoricoItem[];
+  // historico: HistoricoItem[];
 }
 
 function mapTextoParaTipo(
@@ -36,8 +36,16 @@ export default function CardHistMaquina({
   tecnico,
   descricao,
   feedback,
-  historico,
+  // historico,
 }: CardMaquinasProps) {
+
+  const dataFormatada = new Date(dataChamado).toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'short',
+    year:
+     'numeric',
+  });
+
   return (
     <div className="mainCard" key={id}>
       <div className="tempo">
@@ -48,7 +56,7 @@ export default function CardHistMaquina({
       </div>
 
       <div className="arruma">
-        <div className="data">{dataChamado}</div>
+        <div className="data">{dataFormatada}</div>
 
         <div className="pagCard">
           <div className="card">
@@ -70,7 +78,7 @@ export default function CardHistMaquina({
             </div>
           </div>
 
-          <div className="cardHist">
+          {/* <div className="cardHist">
             <div className="fontBold">Histórico</div>
             {historico.length > 0 ? (
               historico.map((item, index) => (
@@ -85,7 +93,7 @@ export default function CardHistMaquina({
             ) : (
               <div className="semHistorico">Sem histórico disponível.</div>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

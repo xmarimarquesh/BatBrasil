@@ -118,7 +118,7 @@ html, body {
 }
 
 .historico.aberto {
-  max-height: 1000px; /* um valor grande o suficiente para mostrar o conteúdo */
+  max-height: 100%; 
   opacity: 1;
 }
 

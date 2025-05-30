@@ -59,6 +59,20 @@ export default function Maquinas() {
     console.log("maquina selecionada: ", maquinaSelecionadaId)
   };
 
+  chamados
+  .filter((chamado) => chamado.IDMaquina === 1)
+  .map((chamado) => (
+    <CardHistMaquina
+      key={chamado.Id}
+      id={chamado.Id}
+      dataChamado={chamado.DataCriacao}
+      funcionario={chamado.NomeFuncionario}
+      tecnico={chamado.NomeTecnico}
+      descricao={chamado.Descricao}
+      feedback={chamado.Feedback}
+    />
+  ))
+
   return (
     <>
       <Menu />
@@ -98,7 +112,7 @@ export default function Maquinas() {
               <div
                 className={`historico ${maquinaSelecionadaId === maquina.ID ? 'aberto' : ''}`}
               >
-                {maquinaSelecionadaId === maquina.ID &&
+                {Array.isArray(chamados) &&
                   chamados
                     .filter((chamado) => chamado.IDMaquina === maquina.ID)
                     .map((chamado) => (

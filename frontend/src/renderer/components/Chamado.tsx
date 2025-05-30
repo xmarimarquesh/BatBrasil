@@ -4,11 +4,11 @@ import '../css/chamado.css';
 interface ChamadoProps {
   isOpen: boolean;
   onClose: () => void;
-  chamado: any; // Dados do chamado
+  chamado: any; 
 }
 
 export default function Chamado({ isOpen, onClose, chamado }: ChamadoProps) {
-  if (!isOpen) return null; // Não renderiza nada se o modal não estiver aberto
+  if (!isOpen) return null; 
 
   return (
     <div className="modal-overlay" onClick={onClose}>

@@ -5,13 +5,15 @@ import Login from "./pages/Login";
 import Chamados from './pages/Chamados'; 
 import Maquinas from './pages/Maquinas';
 import { UserProvider } from "./components/UserContext";
+import image from '../../assets/image.png';
 
 function Dashboard() {
   return (
     <>
       <Menu/>
-      <div>
+      <div className='dash'>
         <h1>Dashboard</h1>
+        <img src={image} alt="" />
       </div>
     </>
   );

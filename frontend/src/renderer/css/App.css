@@ -9,6 +9,12 @@ body {
   margin: 0px;
 }
 
+.dash {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
 button{
   background-color: transparent;
   border: none;

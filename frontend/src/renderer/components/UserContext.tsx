@@ -19,27 +19,24 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/session", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then(res => {
-        if (!res.ok) throw new Error("Sessão não encontrada");
-        return res.json();
-      })
-      .then(data => {
-        setUser(data);
-      })
-      .catch(() => {
-        setUser(null);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [user]);
+    // Tenta carregar do localStorage primeiro
+    const localUser = localStorage.getItem("user");
+    if (localUser) {
+      try {
+        const parsedUser = JSON.parse(localUser);
+        setUser(parsedUser);
+      } catch {
+        console.warn("Erro ao parsear o user do localStorage");
+        localStorage.removeItem("user");
+      }
+    }
+
+    setLoading(false); // mesmo sem session, termina o loading
+  }, []);
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      {children}
+      {!loading && children}
     </UserContext.Provider>
   );
 }

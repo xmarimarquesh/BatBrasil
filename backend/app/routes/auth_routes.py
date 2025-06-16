@@ -24,7 +24,15 @@ def login():
         session['nome_current'] = user[1]
         session['funcao_current'] = user[2]
 
-        return jsonify({"message": "Login bem-sucedido"}), 200
+        # Retorna os dados do usuário junto com a resposta
+        return jsonify({
+            "message": "Login bem-sucedido",
+            "user": {
+                "ruf": user[0],
+                "nome": user[1],
+                "funcao": user[2]
+            }
+        }), 200
 
     except Exception as e:
         print(f"Erro no login: {e}")
@@ -35,14 +43,3 @@ def login():
             cursor.close()
         if conn:
             conn.close()
-
-
-@auth.get('/session')
-def get_session():
-    if 'nome_current' in session:
-        return jsonify({
-            'nome': session['nome_current'],
-            'ruf': session['ruf_current'],
-            'funcao': session['funcao_current']
-        }), 200
-    return jsonify({'error': 'Sessão não encontrada'}), 401

@@ -17,8 +17,8 @@ function Menu() {
   const { setUser } = useUser();
 
   const handleLogout = () => {
+    localStorage.removeItem("user");
     setUser(null);
-
     navigate('/');
   };
 

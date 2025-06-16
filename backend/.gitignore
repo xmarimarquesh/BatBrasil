@@ -1,1 +1,21 @@
-.venv
+# Ambiente virtual
+.venv/
+venv/
+
+# Cache do Python
+__pycache__/
+*.pyc
+
+# Configurações de IDE
+.vscode/
+.idea/
+
+# Arquivos temporários
+*.log
+*.tmp
+
+# Banco local (se usar SQLite)
+*.db
+
+# Arquivos de ambiente (credenciais)
+.env

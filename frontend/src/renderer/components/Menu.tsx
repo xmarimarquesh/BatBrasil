@@ -3,7 +3,7 @@ import '../css/menu.css'
 import linha from '../../../assets/linha.jpg'
 import logo from '../../../assets/logo.png'
 import notification from '../../../assets/notification.png'
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import Notification from './Notification';
 import React, { useEffect, useState } from 'react';
@@ -13,14 +13,6 @@ import { useUser } from "./UserContext";
 
 function Menu() {
   const [isModalOpen, setModalOpen] = useState(false);
-  const navigate = useNavigate();
-  const { setUser } = useUser();
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
-    navigate('/');
-  };
 
   const { user } = useUser();
 
@@ -54,9 +46,7 @@ function Menu() {
           <div className='Not'>            
             {user && <h3>{user.nome}</h3>}
             <button onClick={() => setModalOpen(true)}><img src={notification} alt="notifications" /></button>
-            <button onClick={handleLogout} className='text_menu'>
-              Sair
-            </button>
+            <Link to="/" className='text_menu'>Sair</Link>
           </div>
         </div>
       </>

@@ -18,7 +18,7 @@ interface IChamado {
   StatusCurrent: string;
   NomeTecnico: string;
   NomeFuncionario: string;
-  DataCriacao: Date;
+  DataCriacao: Date; // ou Date, se converter no `fetch`
   Nivel: string;
   IDMaquina: number;
   Feedback: string;
@@ -35,15 +35,6 @@ export default function Maquinas() {
   const [chamados, setChamadosTodos] = useState<IChamado[]>([]);
   
   useEffect(() => {
-      fetch('http://localhost:5000/chamados')
-        .then(response => response.json())
-        .then(data => {
-          setChamadosTodos(data);
-        })
-        .catch(error => console.error('Erro ao buscar chamados:', error));
-    }, []);
-
-  useEffect(() => {
     fetch('http://localhost:5000/maquinas')
       .then(response => response.json())
       .then(data => {
@@ -52,26 +43,21 @@ export default function Maquinas() {
       .catch(error => console.error('Erro ao buscar chamados:', error));
   }, []);
 
+  useEffect(() => {
+      fetch('http://localhost:5000/chamados')
+        .then(response => response.json())
+        .then(data => {
+          setChamadosTodos(data);
+        })
+        .catch(error => console.error('Erro ao buscar chamados:', error));
+    }, []);
 
   const handleSelecionarMaquina = (id: number) => {
-    console.log("id: ", id)
+    console.log(id)
     setMaquinaSelecionadaId((prev) => (prev === id ? null : id));
-    console.log("maquina selecionada: ", maquinaSelecionadaId)
   };
 
-  chamados
-  .filter((chamado) => chamado.IDMaquina === 1)
-  .map((chamado) => (
-    <CardHistMaquina
-      key={chamado.Id}
-      id={chamado.Id}
-      dataChamado={chamado.DataCriacao}
-      funcionario={chamado.NomeFuncionario}
-      tecnico={chamado.NomeTecnico}
-      descricao={chamado.Descricao}
-      feedback={chamado.Feedback}
-    />
-  ))
+  console.log(maquinas)
 
   return (
     <>
@@ -112,7 +98,7 @@ export default function Maquinas() {
               <div
                 className={`historico ${maquinaSelecionadaId === maquina.ID ? 'aberto' : ''}`}
               >
-                {Array.isArray(chamados) &&
+                {maquinaSelecionadaId === maquina.ID &&
                   chamados
                     .filter((chamado) => chamado.IDMaquina === maquina.ID)
                     .map((chamado) => (

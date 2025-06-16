@@ -9,34 +9,29 @@ interface User {
 
 interface UserContextType {
   user: User | null;
-  setUser: (user: User | null) => void;
+  setUser: (user: User) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Tenta carregar do localStorage primeiro
-    const localUser = localStorage.getItem("user");
-    if (localUser) {
-      try {
-        const parsedUser = JSON.parse(localUser);
-        setUser(parsedUser);
-      } catch {
-        console.warn("Erro ao parsear o user do localStorage");
-        localStorage.removeItem("user");
-      }
-    }
-
-    setLoading(false); // mesmo sem session, termina o loading
+      fetch("http://localhost:5000/session", {
+        method: "GET",
+        credentials: "include",
+      })
+        .then(res => res.json())
+        .then(data => {
+          setUser(data);
+        });
+    
   }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      {!loading && children}
+      {children}
     </UserContext.Provider>
   );
 }

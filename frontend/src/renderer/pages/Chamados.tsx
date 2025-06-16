@@ -18,7 +18,6 @@ interface IChamado {
   Nivel: string;
   IDMaquina: number;
   Feedback: string;
-  NomeMaquina: string
 }
 
 

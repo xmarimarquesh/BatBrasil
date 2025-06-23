@@ -345,3 +345,43 @@
   height: 10px;
   border-radius: 50%;
 }
+
+.arrow {
+  width: 15px; /* ou o tamanho que quiser */
+  height: auto;
+  cursor: pointer;
+}
+
+.arrow.left {
+  transform: scaleX(-1); /* espelha horizontalmente */
+}
+
+.pagination button {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  position: relative;
+}
+
+.pagination button.active {
+  font-weight: bold;
+}
+
+.pagination button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;         /* espessura da linha */
+  background-color: #007bff; /* cor da linha (azul, por exemplo) */
+  border-radius: 2px;
+}
+
+.pagination{
+  margin-bottom: 5px;
+  align-items: center;
+  display: flex;
+}

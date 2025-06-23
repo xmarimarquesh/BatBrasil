@@ -2,8 +2,9 @@ import '../css/login.css';
 import linha from '../../../assets/linha.jpg'
 import logo from '../../../assets/logo.png'
 import { Link } from 'react-router-dom';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
+import { useUser } from '../components/UserContext'; // ajuste o caminho se necessário
 
 interface StatusItem {
   id: number;
@@ -12,21 +13,11 @@ interface StatusItem {
 
 export default function Login() {
 
-  // const [data, setData] = useState<StatusItem[]>([])
   const [ruf, setRuf] = useState<string>("")
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/status").then(
-  //     res => res.json()
-  //   ).then(
-  //     data => {
-  //       setData(data)
-  //       console.log(data)
-  //     }
-  //   )
-  // }, []) 
+  const { setUser } = useUser();  // pega o setUser do contexto
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,6 +33,12 @@ export default function Login() {
       const data = await res.json();
 
       if (res.ok) {
+        setUser({
+          id: data.user.ruf,
+          ruf: data.user.ruf,
+          nome: data.user.nome,
+          funcao: data.user.funcao
+        });
         navigate("/home");
       } else {
         setError(data.error || "Erro ao fazer login");
@@ -70,16 +67,7 @@ export default function Login() {
                 {error && <p style={{ color: "red" }}>{error}</p>}
                 <button type='submit' className='button'>ENTRAR</button>
           </form>
-
-            {/* {(data.length === 0) ? (
-              <p>Loading..</p>
-            ) : (
-              data.map((estadp, i) => (
-                <p key={i}>{estadp.status}</p>
-              ))
-            )} */}
         </div>
     </>
   );
 }
-

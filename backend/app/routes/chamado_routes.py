@@ -54,6 +54,7 @@ def adicionar_chamado():
         data = request.get_json()
         descricao = data.get('Descricao')
         id_tecnico = data.get('IDTecnico')
+        id_maquina = data.get('IDMaquina')
         id_funcionario = data.get('IDFuncionario')
         id_status = data.get('IDStatus')
         id_dificuldade = data.get('IDDificuldade')
@@ -62,9 +63,9 @@ def adicionar_chamado():
         cursor = conn.cursor()
 
         cursor.execute("""
-            INSERT INTO Chamado (Descricao, IDTecnico, IDFuncionario, IDStatus, IDDificuldade, DataCriacao)
-            VALUES (%s, %s, %s, %s, %s, NOW())
-        """, (descricao, id_tecnico, id_funcionario, id_status, id_dificuldade))
+            INSERT INTO Chamado (Descricao, IDTecnico, IDFuncionario, IDStatus, IDDificuldade, DataCriacao, IDMaquina)
+            VALUES (%s, %s, %s, %s, %s, NOW(), %s)
+        """, (descricao, id_tecnico, id_funcionario, id_status, id_dificuldade, id_maquina))
 
         conn.commit()
 

@@ -11,23 +11,13 @@ def create_app():
     from .routes.status_routes import status
     from .routes.maquina_routes import maquinas
     from .routes.chamado_routes import chamados
+    from app.routes.usuarios import usuarios
+    from app.routes.setores import setores
 
     app.register_blueprint(auth)
     app.register_blueprint(status)
     app.register_blueprint(maquinas)
     app.register_blueprint(chamados)
-
-    @app.route('/teste-conexao')
-    def teste_conexao():
-        try:
-            conn = get_connection()
-            cursor = conn.cursor()
-            cursor.execute("SHOW TABLES;")
-            tabelas = [t[0] for t in cursor.fetchall()]  # pega nomes das tabelas
-            cursor.close()
-            conn.close()
-            return jsonify({"status": "sucesso", "tabelas": tabelas})
-        except Exception as e:
-            return jsonify({"status": "erro", "mensagem": str(e)}), 500
-
+    app.register_blueprint(setores)
+    app.register_blueprint(usuarios)
     return app

@@ -12,7 +12,7 @@ def get_maquinas():
 
         cursor.execute("""
             SELECT 
-                M.ID, M.Descricao, M.DataCompra, S.Name AS Setor
+                M.ID, M.Descricao, M.DataCompra, S.Nome AS Setor
             FROM Maquina M
             INNER JOIN Setor S ON S.ID = M.IDSetor
         """)

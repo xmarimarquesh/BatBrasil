@@ -1,11 +1,17 @@
-
-import pypyodbc as odbc
-from .config import connection_string
+import mysql.connector
+from .config import host, database, user, password, port
 
 def get_connection():
     try:
-        conn = odbc.connect(connection_string)
+        conn = mysql.connector.connect(
+            host=host,
+            database=database,
+            user=user,
+            password=password,
+            port=port
+        )
+        print("Conexão com o MySQL feita com sucesso!")
         return conn
-    except odbc.Error as e:
-        print("Erro na conexão:", e)
+    except mysql.connector.Error as e:
+        print("Erro na conexão com MySQL:", e)
         raise

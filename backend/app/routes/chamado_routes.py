@@ -13,7 +13,7 @@ def get_chamados():
 
         cursor.execute("""
             SELECT 
-                C.ID, C.Descricao, UT.Nome AS Tecnico, UF.Nome AS Funcionario,
+                C.IDChamado, C.Descricao, UT.Nome AS Tecnico, UF.Nome AS Funcionario,
                 C.DataCriacao, S.Status, D.Nivel, C.IDMaquina, C.Feedback, M.Descricao AS NomeMaquina
             FROM Chamado C
             INNER JOIN Maquina M ON M.ID = C.IDMaquina
@@ -26,7 +26,7 @@ def get_chamados():
         rows = cursor.fetchall()
         data = [
             {
-                "Id": row[0],
+                "IDChamado": row[0],
                 "Descricao": row[1],
                 "NomeTecnico": row[2],
                 "NomeFuncionario": row[3],
@@ -63,7 +63,7 @@ def adicionar_chamado():
 
         cursor.execute("""
             INSERT INTO Chamado (Descricao, IDTecnico, IDFuncionario, IDStatus, IDDificuldade, DataCriacao)
-            VALUES (?, ?, ?, ?, ?, GETDATE())
+            VALUES (%s, %s, %s, %s, %s, NOW())
         """, (descricao, id_tecnico, id_funcionario, id_status, id_dificuldade))
 
         conn.commit()

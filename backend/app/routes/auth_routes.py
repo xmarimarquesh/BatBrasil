@@ -14,7 +14,7 @@ def login():
         conn = get_connection()
         cursor = conn.cursor()
 
-        cursor.execute("SELECT RUF, Nome, IDFuncao FROM Usuario WHERE RUF = ?", (ruf,))
+        cursor.execute("SELECT RUF, Nome, IDFuncao FROM Usuario WHERE RUF = %s", (ruf,))
         user = cursor.fetchone()
 
         if not user:

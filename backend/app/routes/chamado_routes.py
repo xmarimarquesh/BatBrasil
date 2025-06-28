@@ -63,8 +63,8 @@ def adicionar_chamado():
         cursor = conn.cursor()
 
         cursor.execute("""
-            INSERT INTO Chamado (Descricao, IDTecnico, IDFuncionario, IDStatus, IDDificuldade, DataCriacao, IDMaquina)
-            VALUES (%s, %s, %s, %s, %s, NOW(), %s)
+            INSERT INTO Chamado (Descricao, IDTecnico, IDFuncionario, IDStatus, IDDificuldade, IDMaquina, DataCriacao)
+            VALUES (%s, %s, %s, %s, %s, %s, NOW())
         """, (descricao, id_tecnico, id_funcionario, id_status, id_dificuldade, id_maquina))
 
         conn.commit()

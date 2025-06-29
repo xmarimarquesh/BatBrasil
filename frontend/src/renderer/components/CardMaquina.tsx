@@ -3,7 +3,7 @@ import '../css/maquina.css';
 interface CardMaquinaProps {
   id: number;
   descricao: string;
-  dataCompra: Date;
+  dataCompra: string;
   idSetor: string;
 }
 

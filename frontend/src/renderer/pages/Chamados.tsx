@@ -95,19 +95,21 @@ export default function Chamados() {
 
   // --- Efeito para Aplicar Filtros na Lista de Chamados ---
   useEffect(() => {
-    const baseList = activeTab === 'todos' ? chamadosTodos : chamadosMeus;
+   const baseList = activeTab === 'todos' ? chamadosTodos : chamadosMeus;
 
-    const filtrados = baseList.filter(chamado => {
-      const matchPrioridade = !filtrosAtivos.prioridade || chamado.Nivel === filtrosAtivos.prioridade;
-      const matchTecnico = !filtrosAtivos.tecnico || String(chamado.IDTecnico) === filtrosAtivos.tecnico;
-      const matchMaquina = !filtrosAtivos.maquina || String(chamado.IDMaquina) === filtrosAtivos.maquina;
-      return matchPrioridade && matchTecnico && matchMaquina;
-    });
+   const filtrados = baseList.filter(chamado => {
+    const matchPrioridade = !filtrosAtivos.prioridade || chamado.Nivel === filtrosAtivos.prioridade;
+    const matchTecnico = !filtrosAtivos.tecnico || chamado.NomeTecnico === filtrosAtivos.tecnico;
+    return matchPrioridade && matchTecnico;
+   });
 
-    setChamadosFiltrados(filtrados);
-    if(currentPage !== 1) setCurrentPage(1);
-  }, [chamadosTodos, chamadosMeus, activeTab, filtrosAtivos, currentPage]);
+   setChamadosFiltrados(filtrados);
+  }, [chamadosTodos, chamadosMeus, activeTab, filtrosAtivos]); 
 
+// --- Efeito para Resetar a Paginação ao Mudar Filtros ou Abas ---
+  useEffect(() => {
+      setCurrentPage(1);
+  }, [filtrosAtivos, activeTab]);
 
   // --- Handlers para Ações de Filtro ---
   const handleFiltroChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -228,14 +230,9 @@ export default function Chamados() {
             <label htmlFor="filtro-tecnico">Técnico Responsável</label>
             <select id="filtro-tecnico" name="tecnico" value={filtrosSelecionados.tecnico} onChange={handleFiltroChange}>
               <option value="">Todos</option>
-              {tecnicos.map(t => <option key={t.id} value={t.id}>{t.nome}</option>)}
+              {tecnicos.map(t => <option key={t.id} value={t.nome}>{t.nome}</option>)}
             </select>
             
-            <label htmlFor="filtro-maquina">Máquina</label>
-            <select id="filtro-maquina" name="maquina" value={filtrosSelecionados.maquina} onChange={handleFiltroChange}>
-              <option value="">Todas</option>
-              {/* Idealmente, esta lista de máquinas seria carregada no useEffect inicial */}
-            </select>
         </div>
         <div className="filtro-modal-footer">
           <button onClick={handleLimparFiltros} className="btn-limpar">Limpar</button>
@@ -279,6 +276,7 @@ export default function Chamados() {
               {currentItems.length === 0 && <p>Nenhum chamado encontrado para os filtros selecionados.</p>}
             </div>
             
+            {currentItems.length >=1 && 
             <div className="pagination">
               <button onClick={goPrev} disabled={currentPage === 1}><img src={arrow} alt="Anterior" className="arrow left" /></button>
               {[...Array(totalPages)].map((_, idx) => (
@@ -288,7 +286,7 @@ export default function Chamados() {
               ))}
               <button onClick={goNext} disabled={currentPage === totalPages || totalPages === 0}><img src={arrow} alt="Próximo" className="arrow right" /></button>
             </div>
-
+            }
           </div>
         </div>
       </div>

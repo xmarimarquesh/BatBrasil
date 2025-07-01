@@ -1,5 +1,5 @@
-host = 'b2prgsnzhnyg5kgpbdsj-mysql.services.clever-cloud.com'
-database = 'b2prgsnzhnyg5kgpbdsj'
-user = 'utsqzwaeebpmfxan'
-password = 'nScBDtojmE3Z5Q8rv4T8'
+host = 'bpj0hakwipseyrx3j6a8-mysql.services.clever-cloud.com'
+database = 'bpj0hakwipseyrx3j6a8'
+user = 'uwvkzbpqad0ua2kq'
+password = 'dJjJaiSsuououE96wjrh'
 port = 3306

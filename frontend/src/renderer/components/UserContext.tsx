@@ -5,6 +5,7 @@ interface User {
   id: number;
   nome: string;
   funcao: number;
+  ruf: number;
 }
 
 interface UserContextType {

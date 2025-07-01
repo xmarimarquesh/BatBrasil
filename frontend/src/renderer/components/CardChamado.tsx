@@ -24,13 +24,13 @@ export default function CardChamado({
   const statusColor = {
     'Aberto': 'red',
     'Em andamento': 'goldenrod',
-    'Fechado': 'green',
+    'Concluído': 'green',
   }[status];
 
   const prioridadeColor = {
-    'Urgente': 'orange',
-    'Médio': 'yellowgreen',
-    'Fácil': 'lime',
+    'Alta': 'orange',
+    'Média': 'yellow',
+    'Baixa': 'lime',
   }[prioridade];
 
   const dataFormatada = new Date(data).toLocaleDateString('pt-BR', {

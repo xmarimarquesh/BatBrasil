@@ -5,19 +5,19 @@ GO
 
 -- Tabela de Função
 CREATE TABLE Funcao (
-    ID INT PRIMARY KEY,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     Nome NVARCHAR(50)
 );
 
 -- Tabela de Setor
 CREATE TABLE Setor (
-    ID INT PRIMARY KEY,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     Nome NVARCHAR(50)
 );
 
 -- Tabela de Usuario
 CREATE TABLE Usuario (
-    RUF INT PRIMARY KEY,
+    RUF INT AUTO_INCREMENT PRIMARY KEY,
     Nome NVARCHAR(100),
     IDFuncao INT NOT NULL,
     FOREIGN KEY (IDFuncao) REFERENCES Funcao(ID)
@@ -25,7 +25,7 @@ CREATE TABLE Usuario (
 
 -- Tabela de Maquina
 CREATE TABLE Maquina (
-    ID INT PRIMARY KEY,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     Descricao NVARCHAR(100),
     DataCompra DATE,
     IDSetor INT NOT NULL,
@@ -34,13 +34,13 @@ CREATE TABLE Maquina (
 
 -- Tabela de Status
 CREATE TABLE Status (
-    ID INT PRIMARY KEY,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     Status NVARCHAR(50)
 );
 
 -- Tabela de Dificuldade
 CREATE TABLE Dificuldade (
-    ID INT PRIMARY KEY,
+    ID INT AUTO_INCREMENT PRIMARY KEY,
     Nivel NVARCHAR(50)
 );
 

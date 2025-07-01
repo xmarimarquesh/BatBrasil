@@ -144,3 +144,55 @@ html, body {
   display: flex;
   justify-content: flex-end;
 }
+
+/* Corpo do modal de cadastro */
+    .cadastro-modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 15px; /* Espaçamento entre os campos */
+      padding: 10px 25px; /* Espaçamento interno */
+    }
+
+    .cadastro-modal-body label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: -10px; /* Aproxima a label do seu input/select */
+      font-size: 0.9rem;
+    }
+
+    .cadastro-modal-body input,
+    .cadastro-modal-body select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #fff;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    /* Rodapé do modal de cadastro com os botões */
+    .cadastro-modal-footer {
+      display: flex;
+      justify-content: flex-end; /* Alinha os botões à direita */
+      gap: 12px;
+      padding: 20px 25px;
+      border-top: 1px solid #e9ecef; /* Linha separadora */
+      background-color: #f8f9fa;
+    }
+
+    .btn-cadastrar {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background-color: #0d2b6c; /* Cor principal */
+      color: white;
+    }
+
+    .btn-cadastrar:hover {
+      background-color: #0a2254; /* Um tom mais escuro para o hover */
+    }
+

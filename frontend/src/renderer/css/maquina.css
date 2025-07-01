@@ -99,7 +99,6 @@ html, body {
 }
 
 .maquinas{
-
   margin: 2%;
   display: flex;
   justify-content: center;
@@ -196,3 +195,145 @@ html, body {
       background-color: #0a2254; /* Um tom mais escuro para o hover */
     }
 
+
+    /* Paginação */
+.arrow {
+  width: 15px;
+  height: auto;
+  cursor: pointer;
+}
+
+.arrow.left {
+  transform: scaleX(-1);
+}
+
+.pagination {
+  margin-bottom: 5px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  position: relative;
+}
+
+.pagination button.active {
+  font-weight: bold;
+}
+
+.pagination button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background-color: #007bff;
+  border-radius: 2px;
+}
+
+
+/* maquina.css */
+
+.controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px; /* Adjust padding as needed */
+}
+
+.search-and-filter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 2%;
+}
+
+.search-bar {
+  width: 700px;
+  height: 2.5rem;
+  flex-shrink: 0;
+  fill: #FFF;
+  box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.25) inset;
+  border: 0;
+  color: #686868;
+  font-size: 15px;
+  font-style: normal;
+  line-height: normal;
+  padding-left: 2%;
+}
+
+.but_filtro {
+  background-color: #f0f0f0; /* Light background for the filter button */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.but_filtro img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Styles for the filter modal body and footer (similar to your existing modal styles) */
+.filtro-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+}
+
+.filtro-modal-body label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.filtro-modal-body select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.filtro-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn-limpar, .btn-salvar-filtro {
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filter-setor{
+  width: 100%;
+  height: 2.5rem;
+  flex-shrink: 0;
+  fill: #FFF;
+  box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.25) inset;
+  border: 0;
+  margin-top: 2%;
+  color: #686868;
+  font-size: 15px;
+  font-style: normal;
+  line-height: normal;
+  padding-left: 2%;
+}

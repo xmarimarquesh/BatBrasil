@@ -165,6 +165,25 @@ export default function App() {
     setFilterModalOpen(false);
   };
 
+  const excluirMaquina = (id: number) => {
+    if (confirm('Tem certeza que deseja excluir esta máquina?')) {
+      fetch(`http://localhost:5000/maquinas/${id}`, {
+        method: 'DELETE',
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error('Erro ao excluir máquina');
+          }
+          fetchMaquinas(); // Atualiza a lista após excluir
+        })
+        .catch((err) => {
+          console.error(err);
+          alert('Erro ao excluir máquina. Verifique o console.');
+        });
+    }
+  };
+
+
   return (
     <div className="app-container">
       <Menu />
@@ -264,7 +283,24 @@ export default function App() {
                     descricao={maquina.Descricao}
                     dataCompra={maquina.DataCompra}
                     idSetor={maquina.Setor}
+                    onDelete={() => {
+                      if (window.confirm('Tem certeza que deseja excluir esta máquina?')) {
+                        fetch(`http://localhost:5000/maquinas/${maquina.ID}`, {
+                          method: 'DELETE',
+                        })
+                          .then(response => {
+                            if (!response.ok) throw new Error('Erro ao excluir');
+                            return response.json();
+                          })
+                          .then(() => fetchMaquinas()) 
+                          .catch(error => {
+                            console.error('Erro ao excluir máquina:', error);
+                            alert('Erro ao excluir máquina. Verifique o console.');
+                          });
+                      }
+                    }}
                   />
+
                 </div>
 
                 <div

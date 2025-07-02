@@ -171,3 +171,10 @@ button{
 .filtro-opcoes div:hover {
   background-color: #f0f0f0;
 }
+
+.dash{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

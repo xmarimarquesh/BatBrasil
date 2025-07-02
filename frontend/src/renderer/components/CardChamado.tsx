@@ -23,8 +23,8 @@ export default function CardChamado({
 
   const statusColor = {
     'Aberto': 'red',
-    'Em andamento': 'goldenrod',
-    'Concluído': 'green',
+    'Em Andamento': 'goldenrod',
+    'Fechado': 'green',
   }[status];
 
   const prioridadeColor = {

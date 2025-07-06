@@ -1,33 +1,70 @@
 import React, { useState } from 'react';
 import '../css/chamado.css';
 
-// Ícones (opcional, mas recomendado - usando SVGs simples como exemplo)
-const IconUser = () => <svg /* SVG de usuário */ />;
-const IconCalendar = () => <svg /* SVG de calendário */ />;
-const IconTag = () => <svg /* SVG de tag/etiqueta */ />;
-
 interface ChamadoProps {
   isOpen: boolean;
   onClose: () => void;
   chamado: any; 
+  user: any;
 }
 
-export default function Chamado({ isOpen, onClose, chamado }: ChamadoProps) {
+export default function Chamado({ isOpen, onClose, chamado, user }: ChamadoProps) {
   if (!isOpen) return null;
 
   // Estado para controlar o status selecionado no dropdown
   const [selectedStatus, setSelectedStatus] = useState(chamado.StatusCurrent);
 
-  const handleStatusUpdate = () => {
-    // Aqui você adicionaria a lógica para enviar a atualização para o backend
-    console.log(`Status do chamado ${chamado.id} atualizado para: ${selectedStatus}`);
-    alert(`Status atualizado para: ${selectedStatus}`);
-    // O ideal seria fechar o modal ou recarregar os dados após a confirmação do backend
-    // onClose(); 
+  const handleStatusUpdate = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/chamados/${chamado.IDChamado}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ Status: selectedStatus }),
+      });
+
+      if (response.ok) {
+        alert(`Status atualizado para: ${selectedStatus}`);
+        onClose(); // fecha o modal após sucesso
+      } else {
+        const erro = await response.json();
+        alert(`Erro: ${erro.erro || 'Erro ao atualizar status.'}`);
+      }
+    } catch (error) {
+      alert('Erro de rede ao atualizar o status.');
+      console.error(error);
+    }
   };
+
+  const handleCancelarChamado = async () => {
+  const confirmar = window.confirm("Tem certeza que deseja cancelar este chamado?");
+  if (!confirmar) return;
+
+  try {
+    const response = await fetch(`http://localhost:5000/chamados/${chamado.IDChamado}/cancelar`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      alert('Chamado cancelado com sucesso!');
+      onClose(); // Fecha o modal
+    } else {
+      const erro = await response.json();
+      alert(`Erro: ${erro.erro || 'Erro ao cancelar chamado.'}`);
+    }
+  } catch (error) {
+    alert('Erro de rede ao cancelar o chamado.');
+    console.error(error);
+  }
+};
+
   
   // Lógica para a Linha do Tempo
-  const statusSteps = ['Aberto', 'Em andamento', 'Concluído'];
+  const statusSteps = ['Aberto', 'Em Andamento', 'Fechado'];
   const currentStatusIndex = statusSteps.indexOf(chamado.StatusCurrent);
 
   return (
@@ -81,24 +118,37 @@ export default function Chamado({ isOpen, onClose, chamado }: ChamadoProps) {
                 </div>
             </div>
           </div>
+          <div style={{ display: 'flex', alignItems: 'flex-end', width: '100%', justifyContent:'flex-end' }}>
+            {(user?.funcao === 1 && user.id === chamado.IDFuncionario) && (
+              <button className="btn-cancel" onClick={handleCancelarChamado}>
+                Cancelar Chamado
+              </button>
+            )}
+          </div>
+
+          
         </div>
 
         {/* SEÇÃO DE ATUALIZAÇÃO PARA O TÉCNICO */}
-        <div className="update-status-section">
-          <label htmlFor="status-select">Atualizar Status:</label>
-          <div className="update-controls">
-            <select 
-              id="status-select" 
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-            >
-              <option value="Aberto">Aberto</option>
-              <option value="Em andamento">Em andamento</option>
-              <option value="Concluído">Concluído</option>
-            </select>
-            <button className="btn-save" onClick={handleStatusUpdate}>Salvar</button>
+        {(user.id == chamado.IDTecnico) && (
+          <div className="update-status-section">
+            <label htmlFor="status-select">Atualizar Status:</label>
+            <div className="update-controls">
+              <select 
+                id="status-select" 
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value)}
+              >
+                <option value="Aberto">Aberto</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Concluído">Concluído</option>
+              </select>
+              <button className="btn-save" onClick={handleStatusUpdate}>Salvar</button>
+            </div>
           </div>
-        </div>
+        )}
+
+        
 
         {/* RODAPÉ DO MODAL */}
         <div className="modal-footer">

@@ -14,7 +14,7 @@ def get_chamados():
         cursor.execute("""
             SELECT 
                 C.IDChamado, C.Descricao, UT.Nome AS Tecnico, UF.Nome AS Funcionario,
-                C.DataCriacao, S.Status, D.Nivel, C.IDMaquina, C.Feedback, M.Descricao AS NomeMaquina
+                C.DataCriacao, S.Status, D.Nivel, C.IDMaquina, C.Feedback, M.Descricao AS NomeMaquina, C.IDTecnico, C.IDFuncionario
             FROM Chamado C
             INNER JOIN Maquina M ON M.ID = C.IDMaquina
             INNER JOIN Usuario UT ON UT.RUF = C.IDTecnico 
@@ -35,7 +35,9 @@ def get_chamados():
                 "Nivel": row[6],
                 "IDMaquina": row[7],
                 "Feedback": row[8],
-                "NomeMaquina": row[9]
+                "NomeMaquina": row[9],
+                "IDTecnico": row[10],
+                "IDFuncionario": row[11]
             } for row in rows
         ]
         return jsonify(data)
@@ -74,6 +76,68 @@ def adicionar_chamado():
     except Exception as e:
         print(e)
         return jsonify({'erro': 'Erro interno'}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+@chamados.put('/chamados/<int:id_chamado>/status')
+def atualizar_status_chamado(id_chamado):
+    try:
+        data = request.get_json()
+        novo_status = data.get('Status')
+
+        # Mapeamento dos nomes para os IDs da tabela Status
+        status_map = {
+            "Aberto": 1,
+            "Em andamento": 2,
+            "Concluído": 3
+        }
+
+        id_status = status_map.get(novo_status)
+        if not id_status:
+            return jsonify({"erro": "Status inválido"}), 400
+
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            UPDATE Chamado
+            SET IDStatus = %s
+            WHERE IDChamado = %s
+        """, (id_status, id_chamado))
+
+        conn.commit()
+
+        return jsonify({"mensagem": "Status atualizado com sucesso!"}), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({"erro": "Erro ao atualizar status"}), 500
+    finally:
+        cursor.close()
+        conn.close()
+
+@chamados.put('/chamados/<int:id_chamado>/cancelar')
+def cancelar_chamado(id_chamado):
+    try:
+        # ID do status "Cancelado" (você pode mudar esse ID se for diferente)
+        STATUS_CANCELADO = 4
+
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            UPDATE Chamado
+            SET IDStatus = %s
+            WHERE IDChamado = %s
+        """, (STATUS_CANCELADO, id_chamado))
+
+        conn.commit()
+        return jsonify({"mensagem": "Chamado cancelado com sucesso!"}), 200
+
+    except Exception as e:
+        print(e)
+        return jsonify({"erro": "Erro ao cancelar chamado"}), 500
     finally:
         cursor.close()
         conn.close()

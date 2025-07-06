@@ -1,4 +1,5 @@
 import '../css/maquina.css';
+import { useUser } from '../components/UserContext';
 
 interface CardMaquinaProps {
   id: number;
@@ -17,7 +18,7 @@ export default function CardChamado({ id, descricao, dataCompra, idSetor, onDele
       'numeric',
   });
 
-
+  const { user } = useUser();
   return (
     <div className="card-chamado">
       <div className="coluna-esquerda">
@@ -29,22 +30,25 @@ export default function CardChamado({ id, descricao, dataCompra, idSetor, onDele
       </div>
       <div className="coluna-direita">
         <p className="data"><strong>{idSetor}</strong></p>
-        {onDelete && (
-          <button
-            style={{
-              marginTop: '10px',
-              backgroundColor: '#c62828',
-              color: '#fff',
-              border: 'none',
-              padding: '6px 12px',
-              borderRadius: '5px',
-              cursor: 'pointer',
-            }}
-            onClick={onDelete}
-          >
-            Excluir
-          </button>
-        )}
+        <div className='abrir-chamado'>
+            {(user?.funcao === 4 || user?.funcao === 5) && (
+                onDelete && (
+                  <button
+                    style={{
+                      marginTop: '10px',
+                      backgroundColor: '#c62828',
+                      color: '#fff',
+                      border: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={onDelete}
+                  >
+                    Excluir
+                  </button>
+                ))}
+          </div>
       </div>
     </div>
   );

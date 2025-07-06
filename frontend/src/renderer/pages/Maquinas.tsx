@@ -6,6 +6,7 @@ import '../css/maquina.css';
 import Modal from '../components/Modal';
 import arrow from '../../../assets/arrow.png';
 import filtro from '../../../assets/filter.png'; // Import the filter icon
+import { useUser } from '../components/UserContext';
 
 // --- INTERFACES ---
 interface IMaquina {
@@ -183,6 +184,7 @@ export default function App() {
     }
   };
 
+  const { user } = useUser();
 
   return (
     <div className="app-container">
@@ -269,7 +271,10 @@ export default function App() {
             </button>
           </div>
           <div className='abrir-chamado'>
-            <button type="button" onClick={() => setModalOpen(true)}>Cadastrar Máquina</button>
+            {(user?.funcao === 4 || user?.funcao === 5) && (
+                <button type="button" onClick={() => setModalOpen(true)}>Cadastrar Máquina</button>
+              )}
+            
           </div>
         </div>
 

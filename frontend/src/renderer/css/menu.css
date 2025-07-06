@@ -89,7 +89,16 @@ body {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+  
 } 
+
+.modal {
+  padding-top: 20px;
+  max-height: 500px; /* você pode ajustar esse valor conforme necessário */
+  overflow-y: auto;
+  padding-right: 10px; /* opcional, evita o corte da barra de rolagem */
+}
+
 
 .Not img{
   width: 28px;

@@ -537,3 +537,20 @@
 .btn-salvar-filtro:hover {
   background-color: #0a2254; /* Um tom mais escuro para o hover */
 }
+
+
+.btn-cancel {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #c0392b;
+}

@@ -12,7 +12,7 @@ import arrow from '../../../assets/arrow.png';
 
 // --- Interfaces de Tipagem ---
 interface IChamado {
-  Id: number;
+  ID: number;
   Descricao: string;
   StatusCurrent: string;
   NomeTecnico: string;
@@ -180,6 +180,7 @@ export default function Chamados() {
         isOpen={isDetalheChamadoModalOpen}
         onClose={() => setDetalheChamadoModalOpen(false)}
         chamado={selectedChamado}
+        user={user}
       />
 
       <Modal isOpen={isNovoChamadoModalOpen} onClose={() => setNovoChamadoModalOpen(false)} title="Abrir Chamado">
@@ -257,13 +258,17 @@ export default function Chamados() {
               <button onClick={() => setFiltroModalOpen(true)} className='but_filtro'>
                 <img src={filtro} alt="Filtrar Chamados" />
               </button>
-              <button onClick={() => setNovoChamadoModalOpen(true)} className='abrir'>Abrir Chamado</button>
+              {(user?.funcao === 1 || user?.funcao === 4 || user?.funcao === 5 ) && (
+                <button onClick={() => setNovoChamadoModalOpen(true)} className='abrir'>
+                  Abrir Chamado
+                </button>
+              )}
             </div>
 
             <div className="chamados">
               {currentItems.map((chamado) => (
                 <CardChamado
-                  key={chamado.Id}
+                  key={chamado.ID}
                   titulo={chamado.Descricao}
                   status={chamado.StatusCurrent}
                   responsavel={chamado.NomeTecnico}
@@ -271,9 +276,9 @@ export default function Chamados() {
                   data={chamado.DataCriacao}
                   prioridade={chamado.Nivel}
                   onClick={() => openDetalheChamadoModal(chamado)}
-                />
+                  />
               ))}
-              {currentItems.length === 0 && <p>Nenhum chamado encontrado para os filtros selecionados.</p>}
+              {currentItems.length === 0 && <p>Nenhum chamado encontrado...</p>}
             </div>
             
             {currentItems.length >=1 && 

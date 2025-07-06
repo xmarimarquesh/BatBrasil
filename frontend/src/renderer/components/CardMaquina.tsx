@@ -5,16 +5,17 @@ interface CardMaquinaProps {
   descricao: string;
   dataCompra: string;
   idSetor: string;
+  onDelete?: () => void;
 }
 
-export default function CardChamado({ id, descricao, dataCompra, idSetor }: CardMaquinaProps) {
-  
+export default function CardChamado({ id, descricao, dataCompra, idSetor, onDelete }: CardMaquinaProps) {
+
   const dataFormatada = new Date(dataCompra).toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: 'short',
-      year:
-       'numeric',
-    });
+    day: '2-digit',
+    month: 'short',
+    year:
+      'numeric',
+  });
 
 
   return (
@@ -24,10 +25,26 @@ export default function CardChamado({ id, descricao, dataCompra, idSetor }: Card
         <strong>{descricao}</strong>
       </div>
       <div className="coluna-centro">
-        <p><strong>Data compra:</strong>{dataFormatada}</p>
+        <p><strong>Data compra:</strong>&nbsp;{dataFormatada}</p>
       </div>
       <div className="coluna-direita">
         <p className="data"><strong>{idSetor}</strong></p>
+        {onDelete && (
+          <button
+            style={{
+              marginTop: '10px',
+              backgroundColor: '#c62828',
+              color: '#fff',
+              border: 'none',
+              padding: '6px 12px',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+            onClick={onDelete}
+          >
+            Excluir
+          </button>
+        )}
       </div>
     </div>
   );

@@ -101,3 +101,32 @@ def get_maquinas_por_setor(setor_id):
         if conn:
             conn.close()
 
+@maquinas.delete('/maquinas/<int:id>')
+def delete_maquina(id):
+    conn = None
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        # Primeiro exclui os chamados
+        cursor.execute("DELETE FROM Chamado WHERE IDMaquina = %s", (id,))
+
+        # Depois exclui a máquina
+        cursor.execute("DELETE FROM Maquina WHERE ID = %s", (id,))
+        conn.commit()
+
+        return jsonify({'message': 'Máquina e chamados excluídos com sucesso'})
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        print(f"Erro em delete_maquina: {e}")
+        return jsonify({'error': 'Erro ao excluir máquina'}), 500
+    finally:
+        if cursor:
+            cursor.close()
+        if conn:
+            conn.close()
+
+
+

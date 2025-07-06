@@ -74,12 +74,36 @@ const createWindow = async () => {
     width: 1024,
     height: 728,
     icon: getAssetPath('icon.png'),
+    title: 'BatBrasil',
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
-    },
+      contextIsolation: true,
+      sandbox: false,
+      webSecurity: false,
+      webviewTag: true, // 👈 isso permite usar <webview />
+    }
+
+
   });
+
+  ipcMain.handle('abrir-powerbi', async () => {
+    const powerBIWindow = new BrowserWindow({
+      width: 1200,
+      height: 800,
+      webPreferences: {
+        contextIsolation: true,
+        sandbox: false,
+        webSecurity: false
+      },
+    });
+
+    powerBIWindow.loadURL(
+      'https://app.powerbi.com/reportEmbed?reportId=aa3d1a68-8e8d-4e91-ba50-ffd280eae4cf&autoAuth=true&ctid=7aac3b2d-b64e-4b86-9902-e611a0d12ca5'
+    );
+  });
+
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -135,3 +159,5 @@ app
     });
   })
   .catch(console.log);
+
+

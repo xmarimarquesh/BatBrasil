@@ -34,7 +34,9 @@ interface ISetor {
 }
 
 export default function App() {
-  const [maquinaSelecionadaId, setMaquinaSelecionadaId] = useState<number | null>(null);
+  const [maquinaSelecionadaId, setMaquinaSelecionadaId] = useState<
+    number | null
+  >(null);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isFilterModalOpen, setFilterModalOpen] = useState(false);
   const [maquinas, setMaquinas] = useState<IMaquina[]>([]);
@@ -48,41 +50,43 @@ export default function App() {
   const [selectedSetorId, setSelectedSetorId] = useState('');
 
   const fetchMaquinas = () => {
-  setTimeout(() => {
     fetch('http://localhost:5000/maquinas')
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         setMaquinas(data);
         setMaquinasFiltradas(data);
       })
-      .catch(error => console.error('Erro ao buscar máquinas:', error));
-  }, 2000); 
-};
+      .catch((error) => console.error('Erro ao buscar máquinas:', error));
+  };
 
   useEffect(() => {
     fetchMaquinas();
     fetch('http://localhost:5000/chamados')
-      .then(response => response.json())
-      .then(data => setChamadosTodos(data))
-      .catch(error => console.error('Erro ao buscar chamados:', error));
+      .then((response) => response.json())
+      .then((data) => setChamadosTodos(data))
+      .catch((error) => console.error('Erro ao buscar chamados:', error));
     fetch('http://localhost:5000/setores')
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setSetores);
   }, []);
 
   useEffect(() => {
     let filtered = maquinas;
     if (searchTerm) {
-      filtered = filtered.filter(maquina =>
-        Object.values(maquina).some(value =>
-          String(value).toLowerCase().includes(searchTerm.toLowerCase())
-        )
+      filtered = filtered.filter((maquina) =>
+        Object.values(maquina).some((value) =>
+          String(value).toLowerCase().includes(searchTerm.toLowerCase()),
+        ),
       );
     }
     if (selectedSetorId) {
-      const selectedSetorName = setores.find(setor => setor.id === parseInt(selectedSetorId))?.nome;
+      const selectedSetorName = setores.find(
+        (setor) => setor.id === parseInt(selectedSetorId),
+      )?.nome;
       if (selectedSetorName) {
-        filtered = filtered.filter(maquina => maquina.Setor === selectedSetorName);
+        filtered = filtered.filter(
+          (maquina) => maquina.Setor === selectedSetorName,
+        );
       }
     }
     setMaquinasFiltradas(filtered);
@@ -96,7 +100,7 @@ export default function App() {
   const handleEditarMaquina = (maquina: IMaquina) => {
     setNovaDescricao(maquina.Descricao);
     setNovaDataCompra(maquina.DataCompra);
-    const setor = setores.find(s => s.nome === maquina.Setor);
+    const setor = setores.find((s) => s.nome === maquina.Setor);
     setNovoSetorId(setor ? String(setor.id) : '');
     setMaquinaSelecionadaId(maquina.ID);
     setModalOpen(true);
@@ -111,7 +115,7 @@ export default function App() {
     const dadosMaquina = {
       Descricao: novaDescricao,
       DataCompra: novaDataCompra,
-      IDSetor: parseInt(novoSetorId, 10)
+      IDSetor: parseInt(novoSetorId, 10),
     };
     const method = maquinaSelecionadaId ? 'PUT' : 'POST';
     const url = maquinaSelecionadaId
@@ -120,9 +124,9 @@ export default function App() {
     fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(dadosMaquina)
+      body: JSON.stringify(dadosMaquina),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) throw new Error('Falha ao salvar máquina');
         return response.json();
       })
@@ -134,7 +138,7 @@ export default function App() {
         setNovoSetorId('');
         setMaquinaSelecionadaId(null);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Erro ao salvar máquina:', error);
         alert('Erro ao salvar máquina. Verifique o console.');
       });
@@ -158,7 +162,10 @@ export default function App() {
   const [itemsPerPage] = useState(5);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = maquinasFiltradas.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = maquinasFiltradas.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
   const totalPages = Math.ceil(maquinasFiltradas.length / itemsPerPage);
   const goToPage = (pageNumber: number) => setCurrentPage(pageNumber);
   const goNext = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
@@ -173,37 +180,75 @@ export default function App() {
   return (
     <div className="app-container">
       <Menu />
-      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} title="Cadastrar Nova Máquina">
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalOpen(false)}
+        title="Cadastrar Nova Máquina"
+      >
         <form onSubmit={handleCadastrarOuEditarMaquina}>
           <div className="cadastro-modal-body">
             <label htmlFor="nome-maquina">Nome da máquina</label>
-            <input id="nome-maquina" type="text" value={novaDescricao} onChange={(e) => setNovaDescricao(e.target.value)} required />
+            <input
+              id="nome-maquina"
+              type="text"
+              value={novaDescricao}
+              onChange={(e) => setNovaDescricao(e.target.value)}
+              required
+            />
             <label htmlFor="data-compra">Data da compra</label>
-            <input id="data-compra" type="date" value={novaDataCompra} onChange={(e) => setNovaDataCompra(e.target.value)} required />
+            <input
+              id="data-compra"
+              type="date"
+              value={novaDataCompra}
+              onChange={(e) => setNovaDataCompra(e.target.value)}
+              required
+            />
             <label htmlFor="setor">Setor</label>
-            <select id="setor" value={novoSetorId} onChange={(e) => setNovoSetorId(e.target.value)} required>
-              <option value="" disabled>Selecione um setor</option>
+            <select
+              id="setor"
+              value={novoSetorId}
+              onChange={(e) => setNovoSetorId(e.target.value)}
+              required
+            >
+              <option value="" disabled>
+                Selecione um setor
+              </option>
               {setores.map((setor) => (
-                <option key={setor.id} value={setor.id}>{setor.nome}</option>
+                <option key={setor.id} value={setor.id}>
+                  {setor.nome}
+                </option>
               ))}
             </select>
           </div>
           <div className="cadastro-modal-footer">
-            <button className="btn-cadastrar" type="submit">Salvar</button>
+            <button className="btn-cadastrar" type="submit">
+              Salvar
+            </button>
           </div>
         </form>
       </Modal>
 
       <main className="main">
-        <div className='controls-container'>
-          <div className='search-and-filter'>
-            <input type="text" placeholder="Pesquisar..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="search-bar" />
-            <button onClick={() => setFilterModalOpen(true)} className='but_filtro'>
+        <div className="controls-container">
+          <div className="search-and-filter">
+            <input
+              type="text"
+              placeholder="Pesquisar..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-bar"
+            />
+            <button
+              onClick={() => setFilterModalOpen(true)}
+              className="but_filtro"
+            >
               <img src={filtro} alt="Filtrar" />
             </button>
           </div>
-          <div className='abrir-chamado'>
-            <button type="button" onClick={() => setModalOpen(true)}>Cadastrar Máquina</button>
+          <div className="abrir-chamado">
+            <button type="button" onClick={() => setModalOpen(true)}>
+              Cadastrar Máquina
+            </button>
           </div>
         </div>
 
@@ -233,11 +278,24 @@ export default function App() {
 
         {maquinasFiltradas.length > 0 && (
           <div className="pagination">
-            <button onClick={goPrev} disabled={currentPage === 1}><img src={arrow} alt="Anterior" className="arrow left" /></button>
+            <button onClick={goPrev} disabled={currentPage === 1}>
+              <img src={arrow} alt="Anterior" className="arrow left" />
+            </button>
             {[...Array(totalPages)].map((_, idx) => (
-              <button key={idx + 1} onClick={() => goToPage(idx + 1)} className={idx + 1 === currentPage ? 'active' : ''}>{idx + 1}</button>
+              <button
+                key={idx + 1}
+                onClick={() => goToPage(idx + 1)}
+                className={idx + 1 === currentPage ? 'active' : ''}
+              >
+                {idx + 1}
+              </button>
             ))}
-            <button onClick={goNext} disabled={currentPage === totalPages || totalPages === 0}><img src={arrow} alt="Próximo" className="arrow right" /></button>
+            <button
+              onClick={goNext}
+              disabled={currentPage === totalPages || totalPages === 0}
+            >
+              <img src={arrow} alt="Próximo" className="arrow right" />
+            </button>
           </div>
         )}
       </main>

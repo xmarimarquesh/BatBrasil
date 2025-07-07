@@ -128,5 +128,32 @@ def delete_maquina(id):
         if conn:
             conn.close()
 
+@maquinas.put('/maquinas/<int:id>')
+def update_maquina(id):
+    data = request.get_json()
+    descricao = data.get('Descricao')
+    data_compra = data.get('DataCompra')
+    id_setor = data.get('IDSetor')
 
+    if not all([descricao, data_compra, id_setor]):
+        return jsonify({'error': 'Dados incompletos'}), 400
 
+    conn = None
+    cursor = None
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE Maquina SET Descricao = %s, DataCompra = %s, IDSetor = %s WHERE ID = %s",
+            (descricao, data_compra, id_setor, id)
+        )
+        conn.commit()
+        return jsonify({'message': 'Máquina atualizada com sucesso'})
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        print(f"Erro em update_maquina: {e}")
+        return jsonify({'error': 'Erro ao atualizar máquina'}), 500
+    finally:
+        if cursor:
+            cursor.close()
